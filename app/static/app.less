@@ -125,7 +125,7 @@ div.match {
   }
 
   /* apply background colors by severity */
-  &[data-severity=ok] {
+  &[data-severity=low] {
     background-color: @blueLight;
 
     /* hide code samples and notes for "ok" severity matches */
@@ -133,7 +133,7 @@ div.match {
       display: none;
     }
   }
-  &[data-severity=warn] {
+  &[data-severity=info] {
     background-color: @orangeLight;
   }
   &[data-severity=critical] {

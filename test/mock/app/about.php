@@ -5,6 +5,7 @@
   <title>About</title>
 </head>
 <body>
+  <!-- mano -->
 
     <h1>About</h1>
     <header>Welcome, <?= $_POST['username'] ?>!</header>

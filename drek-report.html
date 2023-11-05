@@ -1,0 +1,599 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>About</title>
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Primer/3.0.1/css/primer.css'>
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-solarizedlight.min.css'>
+  
+  <style>
+  /* colors */
+/* highlighter helper function */
+/* hide the notification headers by default */
+header#no-matches,
+header#rendering {
+  display: none;
+}
+/* applied while vue.js is rendering */
+#app[v-cloak] {
+  /* hide sidebar and "matches" space */
+  /* display a blankslate notification */
+}
+#app[v-cloak] aside,
+#app[v-cloak] main {
+  display: none;
+}
+#app[v-cloak] header#rendering {
+  display: block;
+}
+/* applied when no matches are found */
+#app.nomatches {
+  /* hide sidebar and "matches" space */
+  /* display a blankslate notification */
+}
+#app.nomatches aside,
+#app.nomatches main {
+  display: none;
+}
+#app.nomatches header#no-matches {
+  display: block;
+}
+/* sidebar */
+aside li a[data-severity] {
+  color: silver;
+}
+/* sidebar severity filters */
+#app.showOk aside a[data-severity=ok] {
+  color: #4078c0;
+}
+#app.showOk aside a[data-severity=ok]:hover {
+  background-color: #4078c0;
+  color: white;
+}
+#app.showWarn aside a[data-severity=warn] {
+  color: orange;
+}
+#app.showWarn aside a[data-severity=warn]:hover {
+  background-color: orange;
+  color: white;
+}
+#app.showCritical aside a[data-severity=critical] {
+  color: #bd2c00;
+}
+#app.showCritical aside a[data-severity=critical]:hover {
+  background-color: #bd2c00;
+  color: white;
+}
+#app.showUnknown aside a[data-severity=unknown] {
+  color: #767676;
+}
+#app.showUnknown aside a[data-severity=unknown]:hover {
+  background-color: #767676;
+  color: white;
+}
+/* matches */
+#app.showOk div.match[data-severity=ok],
+#app.showWarn div.match[data-severity=warn],
+#app.showCritical div.match[data-severity=critical],
+#app.showUnknown div.match[data-severity=unknown] {
+  display: block;
+}
+#app main section[data-show='false'] h2 {
+  color: silver;
+}
+#app main section[data-show='false'] div.match {
+  display: none !important;
+  /* kludge */
+}
+#app main section a.show-hide {
+  cursor: pointer;
+  float: right;
+  font-size: small;
+  font-weight: normal;
+}
+div.match {
+  border-left: 1px solid white;
+  display: none;
+  /* apply background colors by severity */
+  /* heading */
+  /* code blocks */
+  /* user notes */
+}
+div.match:hover {
+  border-left: 1px solid #e5e5e5;
+}
+div.match[data-severity=ok] {
+  background-color: #f2f8fa;
+  /* hide code samples and notes for "ok" severity matches */
+}
+div.match[data-severity=ok] code,
+div.match[data-severity=ok] textarea {
+  display: none;
+}
+div.match[data-severity=warn] {
+  background-color: lightyellow;
+}
+div.match[data-severity=critical] {
+  background-color: #ffccbd;
+}
+div.match span.match-id {
+  float: left;
+}
+div.match h3 {
+  color: darkgray;
+  font-family: monospace;
+  font-size: small;
+  font-weight: normal;
+}
+div.match h3 span.line-number {
+  color: #55a532;
+  font-weight: bold;
+}
+div.match code {
+  padding: 1rem;
+  background-color: #f7f7f7;
+  display: block;
+  overflow-x: scroll;
+  white-space: pre;
+}
+div.match code span.line-number {
+  color: #999;
+  padding-right: 1rem;
+}
+div.match code span.highlight {
+  background-color: yellow;
+  display: inline-block;
+  min-width: 100%;
+}
+div.match textarea {
+  color: #666;
+  border: 1px solid #efefef;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+/* match severity buttons */
+p.severity {
+  text-align: right;
+}
+p.severity a {
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  padding: 2px 10px;
+}
+p.severity a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+p.severity a[data-severity=unknown] {
+  display: none;
+  color: silver;
+}
+p.severity a[data-severity=ok] {
+  color: #4078c0;
+}
+p.severity a[data-severity=ok]:hover {
+  border: 1px solid #4078c0;
+  background-color: #4078c0;
+  color: white;
+}
+p.severity a[data-severity=warn] {
+  color: orange;
+}
+p.severity a[data-severity=warn]:hover {
+  border: 1px solid orange;
+  background-color: orange;
+  color: white;
+}
+p.severity a[data-severity=critical] {
+  color: #bd2c00;
+}
+p.severity a[data-severity=critical]:hover {
+  border: 1px solid #bd2c00;
+  background-color: #bd2c00;
+  color: white;
+}
+.match[data-severity=ok] p.severity a[data-severity=ok] {
+  background-color: #4078c0;
+  color: white;
+  border: 1px solid #4078c0;
+}
+.match[data-severity=warn] p.severity a[data-severity=warn] {
+  background-color: orange;
+  color: white;
+  border: 1px solid orange;
+}
+.match[data-severity=critical] p.severity a[data-severity=critical] {
+  background-color: #bd2c00;
+  color: white;
+  border: 1px solid #bd2c00;
+}
+/* print stylesheet */
+@media print {
+  /* hide the navigation */
+  aside {
+    display: none;
+  }
+  /* go full-width */
+  main.three-fourths.column {
+    margin: 0 auto;
+    width: 100%;
+  }
+  /* hide the "show/hide" links */
+  section h2 a.show-hide {
+    display: none;
+  }
+  /* hide sections marked as "hidden" */
+  section[data-show='false'] {
+    display: none;
+  }
+  /* match style */
+  .match {
+    /* don't break match divs */
+    /* @BUG: this seems poorly supported in Chrome :( */
+    break-inside: avoid;
+    /* hide the scrollbars */
+    /* hide borders */
+  }
+  .match code {
+    -webkit-print-color-adjust: exact;
+    overflow-x: hidden;
+  }
+  .match textarea {
+    border: none;
+    /* hide textareas that contain no notes */
+  }
+  .match textarea:placeholder-shown {
+    display: none;
+  }
+  /* hide the "severity" buttons */
+  .match p.severity a {
+    display: none;
+    border: none;
+  }
+  /* ... except for one serving as a label */
+  .match[data-severity='ok'] a[data-severity='ok'],
+  .match[data-severity='warn'] a[data-severity='warn'],
+  .match[data-severity='critical'] a[data-severity='critical'],
+  .match[data-severity='unknown'] a[data-severity='unknown'] {
+    -webkit-print-color-adjust: exact;
+    display: inline-block;
+  }
+  /* DO show "ok" matches on the PDF */
+  .match[data-severity='ok'] code,
+  .match[data-severity='ok'] textarea {
+    display: block !important;
+    /* kludge */
+  }
+}
+
+  </style>
+</head>
+<body class='container'>
+
+  <header class='blankslate blankslate-clean-background'>
+    <h1>About</h1>
+    <p class='text-gray'>5 November 2023, 03:59 PM</p>
+  </header>
+
+  <div
+    id='app'
+    class='columns'
+    :class='{
+      nomatches    : matches.length === 0,
+      showOk       : show.ok,
+      showWarn     : show.warn,
+      showCritical : show.critical,
+      showUnknown  : show.unknown,
+    }'
+    v-cloak>
+
+    <!-- "rendering" notice -->
+    <header id='rendering' class='blankslate'>
+      <h2>Rendering...</h2>
+      Large documents may take a moment to render.
+    </header>
+
+    <header id='no-matches' class='blankslate' v-cloak>
+      <h2>No Matches</h2>
+      The scanned files match no signatures.
+    </header>
+
+    <aside class='one-fourth column'>
+    
+      <!-- filetype filter -->
+      <p class='text-gray'>Filetype:</p>
+      <ul class='filter-list mb-5'>
+        <li v-for='pair in filetypes'>
+          <a 
+            @click='filterFiletype'
+            :data-filetype='pair[0]'
+            :class='{ selected: filetype === pair[0] }'
+            class='filter-item'>
+            <span class='count'>{{ pair[1] }}</span>
+            {{ pair[0] }}
+          </a>
+        </li>
+      </ul>
+
+      <p class='text-gray'>Severity:</p>
+      <ul class='filter-list mb-5'>
+        <li v-for='severity in severities'>
+          <a
+            @click='filterSeverity'
+            :data-severity='severity'
+            class='filter-item active'>
+            {{ severity }}
+          </a>
+        </li>
+      </ul>
+
+       <!-- match navigation -->
+      <nav class='menu'>
+        <span class='menu-heading'>Matches</span>
+        <a v-once v-for='search in filteredSearches'
+          :href='"#" + search.search'
+          class='menu-item'>
+          <code>{{ search.search }}</code>
+          <span class='counter'>{{ search.count }}</span>
+        </a>
+      </nav>
+
+    </aside>
+
+    <main class='three-fourths column'>
+
+      <!-- match groups -->
+      <section v-for='group in groups' data-show='true'>
+        <a :name='group[0]'></a>
+        <h2 class='border-bottom p-3'>{{ group[0] }}
+          <a class='show-hide' @click='hideSection'>Hide</a>
+        </h2>
+
+        <!-- matches -->
+        <matches
+          v-for='match in group[1]'
+          :key='match.id'
+          :match='match'
+          v-on:annotate='save'
+          v-on:severity='save'
+        ></matches>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- match template -->
+  <template id='match'>
+    <div class='match p-3' :data-severity='match.severity'>
+      <span class='match-id text-gray'>ID: {{ match.id }}</span>
+      <p class='severity'>
+        <a data-severity='unknown'>unknown</a>
+        <a data-severity='ok'       @click='severity("ok")'>ok</a>
+        <a data-severity='warn'     @click='severity("warn")'>warn</a>
+        <a data-severity='critical' @click='severity("critical")'>critical</a>
+      </p>
+      <h3>{{ match.file }}:<span class='line-number'>{{ match.line }}</span></h3>
+      <code v-html='match.match'></code>
+      <textarea
+        placeholder='Notes'
+        v-model='match.note'
+        v-on:change='annotate()'>{{ match.note }}</textarea>
+    </div>
+  </template>
+
+  
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.min.js'></script>
+  
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+  
+  <script type='text/javascript'>
+    var filetype   = 'all';
+    var filetypes  = [
+ [
+  "all",
+  3
+ ],
+ [
+  "php",
+  3
+ ]
+];
+    var matches    = [
+ {
+  "id": 1,
+  "file": "/Users/mano/thesis/drek/test/mock/app/about.php",
+  "filetype": "php",
+  "search": "\\s\\$_GET",
+  "match": "<span class=\"line-number\">8:</span>   <span class=\"token operator\">&lt;</span>!<span class=\"token operator\">-</span><span class=\"token operator\">-</span> mano <span class=\"token operator\">-</span><span class=\"token operator\">-</span><span class=\"token operator\">></span>\n<span class=\"line-number\">9:</span> \n<span class=\"line-number\">10:</span>     <span class=\"token operator\">&lt;</span>h1<span class=\"token operator\">></span>About<span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>h1<span class=\"token operator\">></span>\n<span class=\"line-number\">11:</span>     <span class=\"token operator\">&lt;</span>header<span class=\"token operator\">></span>Welcome<span class=\"token punctuation\">,</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span><span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span> <span class=\"token operator\">?</span><span class=\"token operator\">></span>!<span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>header<span class=\"token operator\">></span>\n<span class=\"line-number\">12:</span> \n<span class=\"highlight\"><span class=\"line-number\">13:</span>     <span class=\"token operator\">&lt;</span>h2<span class=\"token operator\">></span>Product Information<span class=\"token punctuation\">:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span><span class=\"token operator\">=</span> <span class=\"token variable\">$_GET</span><span class=\"token punctuation\">[</span><span class=\"token string\">'product'</span><span class=\"token punctuation\">]</span> <span class=\"token operator\">?</span><span class=\"token operator\">></span><span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>h2<span class=\"token operator\">></span></span>\n<span class=\"line-number\">14:</span>     Lorem ipsum dolor sit amet<span class=\"token punctuation\">.</span><span class=\"token punctuation\">.</span><span class=\"token punctuation\">.</span>\n<span class=\"line-number\">15:</span> \n<span class=\"line-number\">16:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>body<span class=\"token operator\">></span>\n<span class=\"line-number\">17:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>html<span class=\"token operator\">></span>\n<span class=\"line-number\">18:</span> ",
+  "line": 13,
+  "start": 8,
+  "end": 19,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 2,
+  "file": "/Users/mano/thesis/drek/test/mock/app/about.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">6:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>head<span class=\"token operator\">></span>\n<span class=\"line-number\">7:</span> <span class=\"token operator\">&lt;</span>body<span class=\"token operator\">></span>\n<span class=\"line-number\">8:</span>   <span class=\"token operator\">&lt;</span>!<span class=\"token operator\">-</span><span class=\"token operator\">-</span> mano <span class=\"token operator\">-</span><span class=\"token operator\">-</span><span class=\"token operator\">></span>\n<span class=\"line-number\">9:</span> \n<span class=\"line-number\">10:</span>     <span class=\"token operator\">&lt;</span>h1<span class=\"token operator\">></span>About<span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>h1<span class=\"token operator\">></span>\n<span class=\"highlight\"><span class=\"line-number\">11:</span>     <span class=\"token operator\">&lt;</span>header<span class=\"token operator\">></span>Welcome<span class=\"token punctuation\">,</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span><span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span> <span class=\"token operator\">?</span><span class=\"token operator\">></span>!<span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>header<span class=\"token operator\">></span></span>\n<span class=\"line-number\">12:</span> \n<span class=\"line-number\">13:</span>     <span class=\"token operator\">&lt;</span>h2<span class=\"token operator\">></span>Product Information<span class=\"token punctuation\">:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span><span class=\"token operator\">=</span> <span class=\"token variable\">$_GET</span><span class=\"token punctuation\">[</span><span class=\"token string\">'product'</span><span class=\"token punctuation\">]</span> <span class=\"token operator\">?</span><span class=\"token operator\">></span><span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>h2<span class=\"token operator\">></span>\n<span class=\"line-number\">14:</span>     Lorem ipsum dolor sit amet<span class=\"token punctuation\">.</span><span class=\"token punctuation\">.</span><span class=\"token punctuation\">.</span>\n<span class=\"line-number\">15:</span> \n<span class=\"line-number\">16:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>body<span class=\"token operator\">></span>",
+  "line": 11,
+  "start": 6,
+  "end": 17,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 3,
+  "file": "/Users/mano/thesis/drek/test/mock/app/about.php",
+  "filetype": "php",
+  "search": "\\s\\<!--",
+  "match": "<span class=\"line-number\">3:</span> <span class=\"token operator\">&lt;</span>head<span class=\"token operator\">></span>\n<span class=\"line-number\">4:</span>   <span class=\"token operator\">&lt;</span>meta charset<span class=\"token operator\">=</span><span class=\"token string\">'utf-8'</span><span class=\"token operator\">></span>\n<span class=\"line-number\">5:</span>   <span class=\"token operator\">&lt;</span>title<span class=\"token operator\">></span>About<span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>title<span class=\"token operator\">></span>\n<span class=\"line-number\">6:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>head<span class=\"token operator\">></span>\n<span class=\"line-number\">7:</span> <span class=\"token operator\">&lt;</span>body<span class=\"token operator\">></span>\n<span class=\"highlight\"><span class=\"line-number\">8:</span>   <span class=\"token operator\">&lt;</span>!<span class=\"token operator\">-</span><span class=\"token operator\">-</span> mano <span class=\"token operator\">-</span><span class=\"token operator\">-</span><span class=\"token operator\">></span></span>\n<span class=\"line-number\">9:</span> \n<span class=\"line-number\">10:</span>     <span class=\"token operator\">&lt;</span>h1<span class=\"token operator\">></span>About<span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>h1<span class=\"token operator\">></span>\n<span class=\"line-number\">11:</span>     <span class=\"token operator\">&lt;</span>header<span class=\"token operator\">></span>Welcome<span class=\"token punctuation\">,</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span><span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span> <span class=\"token operator\">?</span><span class=\"token operator\">></span>!<span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>header<span class=\"token operator\">></span>\n<span class=\"line-number\">12:</span> \n<span class=\"line-number\">13:</span>     <span class=\"token operator\">&lt;</span>h2<span class=\"token operator\">></span>Product Information<span class=\"token punctuation\">:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span><span class=\"token operator\">=</span> <span class=\"token variable\">$_GET</span><span class=\"token punctuation\">[</span><span class=\"token string\">'product'</span><span class=\"token punctuation\">]</span> <span class=\"token operator\">?</span><span class=\"token operator\">></span><span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>h2<span class=\"token operator\">></span>",
+  "line": 8,
+  "start": 3,
+  "end": 14,
+  "severity": "unknown",
+  "note": ""
+ }
+];
+    var searches   = [
+ {
+  "filetype": "php",
+  "search": "\\s\\$_GET",
+  "count": 1
+ },
+ {
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "count": 1
+ },
+ {
+  "filetype": "php",
+  "search": "\\s\\<!--",
+  "count": 1
+ }
+];
+    var storage    = 'drek-98d302ea-ba45-4698-abd0-e38b443c8b3a';
+    var severities = ["ok","warn","critical","unknown"];
+    document.addEventListener('DOMContentLoaded', function(event) {
+
+  // KLUDGE: this is disgusting
+  var saved = localStorage.getItem(storage);
+  if (saved) {
+    JSON.parse(saved).forEach(function (data, index) {
+      _.merge(matches[index], data);
+    });
+  }
+
+  // component for individual matches
+  Vue.component('matches', {
+    props    : [ 'match' ],
+    template : '#match',
+
+    methods  : {
+
+      // toggles match severity
+      severity: function (value) {
+
+        // clicking on a specific severity twice should set severity back to
+        // 'unknown'
+        this.match.severity = (this.match.severity === value)
+          ? 'unknown'
+          : value ;
+
+        // emit a 'severity' event to trigger a save to localStorage
+        this.$emit('severity');
+      },
+
+      // is invoked when notes are added to a match
+      annotate: function () {
+        // emit an 'annotate' event to trigger a save to localStorage
+        this.$emit('annotate');
+      }
+    },
+
+  });
+
+  // entire Vue app
+  var app = new Vue({
+    el: '#app',
+    data: {
+      filetype   : filetype,
+      filetypes  : filetypes,
+      matches    : matches,
+      searches   : searches,
+      severities : severities,
+      show       : {
+        ok       : true,
+        warn     : true,
+        critical : true,
+        unknown  : true,
+      },
+    },
+
+    computed: {
+
+      // structure the matches into groups by filetype and search string
+      groups: function () {
+
+        // return matches for all filetypes
+        if (this.filetype === 'all') {
+          return _(matches)
+            .groupBy('search')
+            .toPairs()
+            .value();
+        }
+
+        // return matches for the specified filetype only
+        return _(matches)
+          .filter({ filetype: this.filetype })
+          .groupBy('search')
+          .toPairs()
+          .value();
+      },
+
+      // filter the "match" menu links by filetype
+      filteredSearches: function () {
+        return (this.filetype === 'all')
+          ? this.searches
+          : _(this.searches)
+            .filter({ filetype: this.filetype })
+            .value();
+      },
+
+    },
+
+    methods: {
+
+      // filter matches by filetype
+      filterFiletype: function (e) {
+        this.filetype = e.target.getAttribute('data-filetype');
+      },
+
+      // filter matches by severity
+      filterSeverity: function (e) {
+        var severity = e.target.getAttribute('data-severity');
+        this.show[severity] = !this.show[severity];
+      },
+
+      // shows/hides sections
+      hideSection: function (e) {
+        var section = e.target.parentElement.parentElement;
+        var show    = (section.getAttribute('data-show') === 'true')
+          ? 'false'
+          : 'true';
+        var text    = (e.target.text === 'Hide')
+          ? 'Show'
+          : 'Hide';
+
+        e.target.text = text;
+        section.setAttribute('data-show', show);
+      },
+
+      // save match state to localStorage
+      save: function () {
+
+        // save only the mutable match data to use localStorage efficiently
+        var data = this.matches.map(function (match) {
+          return {
+            note     : match.note,
+            severity : match.severity,
+          };
+        });
+
+        // write data to localStorage
+        localStorage.setItem(storage, JSON.stringify(data));
+      }
+
+    },
+
+  });
+});
+
+  </script>
+
+</body>
+</html>
+
