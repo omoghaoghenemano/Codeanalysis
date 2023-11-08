@@ -17,3 +17,5 @@ patterns:
   - \bpassword_hash\s*\(\s*\$password,\s*PASSWORD_BCRYPT\b
   - \b(?:chmod|chown|chgrp)\s*\(\s*\$file\b
   - \bheader\s*\(\s*['"]?Content-Disposition:\s*attachment\b
+  - \s\$password
+  - \s*on\w+\s*=\s*['"].*['"]

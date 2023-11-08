@@ -1,0 +1,925 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>About</title>
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Primer/3.0.1/css/primer.css'>
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-solarizedlight.min.css'>
+  
+  <style>
+  /* colors */
+/* highlighter helper function */
+/* hide the notification headers by default */
+header#no-matches,
+header#rendering {
+  display: none;
+}
+/* applied while vue.js is rendering */
+#app[v-cloak] {
+  /* hide sidebar and "matches" space */
+  /* display a blankslate notification */
+}
+#app[v-cloak] aside,
+#app[v-cloak] main {
+  display: none;
+}
+#app[v-cloak] header#rendering {
+  display: block;
+}
+/* applied when no matches are found */
+#app.nomatches {
+  /* hide sidebar and "matches" space */
+  /* display a blankslate notification */
+}
+#app.nomatches aside,
+#app.nomatches main {
+  display: none;
+}
+#app.nomatches header#no-matches {
+  display: block;
+}
+/* sidebar */
+aside li a[data-severity] {
+  color: silver;
+}
+/* sidebar severity filters */
+#app.showOk aside a[data-severity=ok] {
+  color: #4078c0;
+}
+#app.showOk aside a[data-severity=ok]:hover {
+  background-color: #4078c0;
+  color: white;
+}
+#app.showWarn aside a[data-severity=warn] {
+  color: orange;
+}
+#app.showWarn aside a[data-severity=warn]:hover {
+  background-color: orange;
+  color: white;
+}
+#app.showCritical aside a[data-severity=critical] {
+  color: #bd2c00;
+}
+#app.showCritical aside a[data-severity=critical]:hover {
+  background-color: #bd2c00;
+  color: white;
+}
+#app.showUnknown aside a[data-severity=unknown] {
+  color: #767676;
+}
+#app.showUnknown aside a[data-severity=unknown]:hover {
+  background-color: #767676;
+  color: white;
+}
+/* matches */
+#app.showOk div.match[data-severity=ok],
+#app.showWarn div.match[data-severity=warn],
+#app.showCritical div.match[data-severity=critical],
+#app.showUnknown div.match[data-severity=unknown] {
+  display: block;
+}
+#app main section[data-show='false'] h2 {
+  color: silver;
+}
+#app main section[data-show='false'] div.match {
+  display: none !important;
+  /* kludge */
+}
+#app main section a.show-hide {
+  cursor: pointer;
+  float: right;
+  font-size: small;
+  font-weight: normal;
+}
+div.match {
+  border-left: 1px solid white;
+  display: none;
+  /* apply background colors by severity */
+  /* heading */
+  /* code blocks */
+  /* user notes */
+}
+div.match:hover {
+  border-left: 1px solid #e5e5e5;
+}
+div.match[data-severity=ok] {
+  background-color: #f2f8fa;
+  /* hide code samples and notes for "ok" severity matches */
+}
+div.match[data-severity=ok] code,
+div.match[data-severity=ok] textarea {
+  display: none;
+}
+div.match[data-severity=warn] {
+  background-color: lightyellow;
+}
+div.match[data-severity=critical] {
+  background-color: #ffccbd;
+}
+div.match span.match-id {
+  float: left;
+}
+div.match h3 {
+  color: darkgray;
+  font-family: monospace;
+  font-size: small;
+  font-weight: normal;
+}
+div.match h3 span.line-number {
+  color: #55a532;
+  font-weight: bold;
+}
+div.match code {
+  padding: 1rem;
+  background-color: #f7f7f7;
+  display: block;
+  overflow-x: scroll;
+  white-space: pre;
+}
+div.match code span.line-number {
+  color: #999;
+  padding-right: 1rem;
+}
+div.match code span.highlight {
+  background-color: yellow;
+  display: inline-block;
+  min-width: 100%;
+}
+div.match textarea {
+  color: #666;
+  border: 1px solid #efefef;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+/* match severity buttons */
+p.severity {
+  text-align: right;
+}
+p.severity a {
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  padding: 2px 10px;
+}
+p.severity a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+p.severity a[data-severity=unknown] {
+  display: none;
+  color: silver;
+}
+p.severity a[data-severity=ok] {
+  color: #4078c0;
+}
+p.severity a[data-severity=ok]:hover {
+  border: 1px solid #4078c0;
+  background-color: #4078c0;
+  color: white;
+}
+p.severity a[data-severity=warn] {
+  color: orange;
+}
+p.severity a[data-severity=warn]:hover {
+  border: 1px solid orange;
+  background-color: orange;
+  color: white;
+}
+p.severity a[data-severity=critical] {
+  color: #bd2c00;
+}
+p.severity a[data-severity=critical]:hover {
+  border: 1px solid #bd2c00;
+  background-color: #bd2c00;
+  color: white;
+}
+.match[data-severity=ok] p.severity a[data-severity=ok] {
+  background-color: #4078c0;
+  color: white;
+  border: 1px solid #4078c0;
+}
+.match[data-severity=warn] p.severity a[data-severity=warn] {
+  background-color: orange;
+  color: white;
+  border: 1px solid orange;
+}
+.match[data-severity=critical] p.severity a[data-severity=critical] {
+  background-color: #bd2c00;
+  color: white;
+  border: 1px solid #bd2c00;
+}
+/* print stylesheet */
+@media print {
+  /* hide the navigation */
+  aside {
+    display: none;
+  }
+  /* go full-width */
+  main.three-fourths.column {
+    margin: 0 auto;
+    width: 100%;
+  }
+  /* hide the "show/hide" links */
+  section h2 a.show-hide {
+    display: none;
+  }
+  /* hide sections marked as "hidden" */
+  section[data-show='false'] {
+    display: none;
+  }
+  /* match style */
+  .match {
+    /* don't break match divs */
+    /* @BUG: this seems poorly supported in Chrome :( */
+    break-inside: avoid;
+    /* hide the scrollbars */
+    /* hide borders */
+  }
+  .match code {
+    -webkit-print-color-adjust: exact;
+    overflow-x: hidden;
+  }
+  .match textarea {
+    border: none;
+    /* hide textareas that contain no notes */
+  }
+  .match textarea:placeholder-shown {
+    display: none;
+  }
+  /* hide the "severity" buttons */
+  .match p.severity a {
+    display: none;
+    border: none;
+  }
+  /* ... except for one serving as a label */
+  .match[data-severity='ok'] a[data-severity='ok'],
+  .match[data-severity='warn'] a[data-severity='warn'],
+  .match[data-severity='critical'] a[data-severity='critical'],
+  .match[data-severity='unknown'] a[data-severity='unknown'] {
+    -webkit-print-color-adjust: exact;
+    display: inline-block;
+  }
+  /* DO show "ok" matches on the PDF */
+  .match[data-severity='ok'] code,
+  .match[data-severity='ok'] textarea {
+    display: block !important;
+    /* kludge */
+  }
+}
+
+  </style>
+</head>
+<body class='container'>
+
+  <header class='blankslate blankslate-clean-background'>
+    <h1>About</h1>
+    <p class='text-gray'>8 November 2023, 09:25 PM</p>
+  </header>
+
+  <div
+    id='app'
+    class='columns'
+    :class='{
+      nomatches    : matches.length === 0,
+      showOk       : show.ok,
+      showWarn     : show.warn,
+      showCritical : show.critical,
+      showUnknown  : show.unknown,
+    }'
+    v-cloak>
+
+    <!-- "rendering" notice -->
+    <header id='rendering' class='blankslate'>
+      <h2>Rendering...</h2>
+      Large documents may take a moment to render.
+    </header>
+
+    <header id='no-matches' class='blankslate' v-cloak>
+      <h2>No Matches</h2>
+      The scanned files match no signatures.
+    </header>
+
+    <aside class='one-fourth column'>
+    
+      <!-- filetype filter -->
+      <p class='text-gray'>Filetype:</p>
+      <ul class='filter-list mb-5'>
+        <li v-for='pair in filetypes'>
+          <a 
+            @click='filterFiletype'
+            :data-filetype='pair[0]'
+            :class='{ selected: filetype === pair[0] }'
+            class='filter-item'>
+            <span class='count'>{{ pair[1] }}</span>
+            {{ pair[0] }}
+          </a>
+        </li>
+      </ul>
+
+      <p class='text-gray'>Severity:</p>
+      <ul class='filter-list mb-5'>
+        <li v-for='severity in severities'>
+          <a
+            @click='filterSeverity'
+            :data-severity='severity'
+            class='filter-item active'>
+            {{ severity }}
+          </a>
+        </li>
+      </ul>
+
+       <!-- match navigation -->
+      <nav class='menu'>
+        <span class='menu-heading'>Matches</span>
+        <a v-once v-for='search in filteredSearches'
+          :href='"#" + search.search'
+          class='menu-item'>
+          <code>{{ search.search }}</code>
+          <span class='counter'>{{ search.count }}</span>
+        </a>
+      </nav>
+
+    </aside>
+
+    <main class='three-fourths column'>
+
+      <!-- match groups -->
+      <section v-for='group in groups' data-show='true'>
+        <a :name='group[0]'></a>
+        <h2 class='border-bottom p-3'>{{ group[0] }}
+          <a class='show-hide' @click='hideSection'>Hide</a>
+        </h2>
+
+        <!-- matches -->
+        <matches
+          v-for='match in group[1]'
+          :key='match.id'
+          :match='match'
+          v-on:annotate='save'
+          v-on:severity='save'
+        ></matches>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- match template -->
+  <template id='match'>
+    <div class='match p-3' :data-severity='match.severity'>
+      <span class='match-id text-gray'>ID: {{ match.id }}</span>
+      <p class='severity'>
+        <a data-severity='unknown'>unknown</a>
+        <a data-severity='ok'       @click='severity("ok")'>ok</a>
+        <a data-severity='warn'     @click='severity("warn")'>warn</a>
+        <a data-severity='critical' @click='severity("critical")'>critical</a>
+      </p>
+      <h3>{{ match.file }}:<span class='line-number'>{{ match.line }}</span></h3>
+      <code v-html='match.match'></code>
+      <textarea
+        placeholder='Notes'
+        v-model='match.note'
+        v-on:change='annotate()'>{{ match.note }}</textarea>
+    </div>
+  </template>
+
+  
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.min.js'></script>
+  
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+  
+  <script type='text/javascript'>
+    var filetype   = 'all';
+    var filetypes  = [
+ [
+  "all",
+  27
+ ],
+ [
+  "php",
+  27
+ ]
+];
+    var matches    = [
+ {
+  "id": 15,
+  "file": "/Users/mano/thesis/drek/test/mock/app/index.php",
+  "filetype": "php",
+  "search": "\\b(?:mysql_query|mysqli_query|pdo->query)\\s*\\(\\s*[\"']?(?:SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|UNION)\\b",
+  "match": "<span class=\"line-number\">9:</span> <span class=\"token variable\">$conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">'localhost'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'Journal'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">10:</span> <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">11:</span>   <span class=\"token function\">printf</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Connect failed: %s\\n\"</span><span class=\"token punctuation\">,</span> <span class=\"token function\">mysqli_connect_error</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">12:</span>   <span class=\"token function\">exit</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">13:</span> }\n<span class=\"highlight\"><span class=\"line-number\">14:</span> <span class=\"token variable\">$res</span> <span class=\"token operator\">=</span> <span class=\"token function\">mysql_query</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"SELECT * from users where user='foo' -- ' AND pass=''\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">15:</span> \n<span class=\"line-number\">16:</span> <span class=\"token variable\">$sql</span> <span class=\"token operator\">=</span> <span class=\"token string\">\"INSERT INTO appointment (type,\tappointment_date,\tappointment_time,\tuser_id\t,purpose, completed) VALUES ('$type','$date','$time','$userid',',$purpose','No')\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">17:</span> <span class=\"token variable\">$res</span> <span class=\"token operator\">=</span> <span class=\"token function\">mysqli_query</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$conn</span><span class=\"token punctuation\">,</span> <span class=\"token variable\">$sql</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">18:</span> <span class=\"token function\">if</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$res</span><span class=\"token operator\">==</span><span class=\"token boolean\">true</span><span class=\"token punctuation\">)</span>{\n<span class=\"line-number\">19:</span> ",
+  "line": 14,
+  "start": 9,
+  "end": 20,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 27,
+  "file": "/Users/mano/thesis/drek/test/mock/app/test.php",
+  "filetype": "php",
+  "search": "\\b(?:shell_exec|exec|passthru|system|proc_open|popen)\\s*\\(",
+  "match": "<span class=\"line-number\">20:</span>     <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">in_array</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$command</span><span class=\"token punctuation\">,</span> <span class=\"token variable\">$allowedCommands</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">21:</span>         <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Use escapeshellcmd <span class=\"token keyword\">to</span> escape the command <span class=\"token operator\">and</span> prevent command injection\n<span class=\"line-number\">22:</span>         <span class=\"token variable\">$escapedCommand</span> <span class=\"token operator\">=</span> <span class=\"token function\">escapeshellcmd</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$command</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">23:</span> \n<span class=\"line-number\">24:</span>         <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Use shell_exec <span class=\"token keyword\">with</span> the escaped command\n<span class=\"highlight\"><span class=\"line-number\">25:</span>         <span class=\"token variable\">$result</span> <span class=\"token operator\">=</span> <span class=\"token function\">shell_exec</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$escapedCommand</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">26:</span> \n<span class=\"line-number\">27:</span>         <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Output <span class=\"token operator\">or</span> handle the result as needed\n<span class=\"line-number\">28:</span>         echo <span class=\"token string\">\"Command result: $result\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">29:</span>     } <span class=\"token keyword\">else</span> {\n<span class=\"line-number\">30:</span>         <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Log <span class=\"token operator\">or</span> handle unauthorized command attempts",
+  "line": 25,
+  "start": 20,
+  "end": 31,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 23,
+  "file": "/Users/mano/thesis/drek/test/mock/app/random.php",
+  "filetype": "php",
+  "search": "\\bheader\\s*\\(\\s*['\"]?Content-Disposition:\\s*attachment\\b",
+  "match": "<span class=\"line-number\">34:</span>         <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Set the appropriate Content<span class=\"token operator\">-</span>Type header based on the file type\n<span class=\"line-number\">35:</span>         <span class=\"token variable\">$fileType</span> <span class=\"token operator\">=</span> <span class=\"token function\">mime_content_type</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$filename</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">36:</span>         <span class=\"token function\">header</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Content-Type: $fileType\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">37:</span> \n<span class=\"line-number\">38:</span>         <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Set Content<span class=\"token operator\">-</span>Disposition header <span class=\"token keyword\">to</span> trigger a download prompt\n<span class=\"highlight\"><span class=\"line-number\">39:</span>         <span class=\"token function\">header</span><span class=\"token punctuation\">(</span>\"Content<span class=\"token operator\">-</span>Disposition<span class=\"token punctuation\">:</span> attachment<span class=\"token comment\" spellcheck=\"true\">; filename=\" . basename($filename));</span></span>\n<span class=\"line-number\">40:</span> \n<span class=\"line-number\">41:</span>         <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Set other headers <span class=\"token keyword\">if</span> needed <span class=\"token punctuation\">(</span>e<span class=\"token punctuation\">.</span>g<span class=\"token punctuation\">.</span><span class=\"token punctuation\">,</span> Content<span class=\"token operator\">-</span>Length<span class=\"token punctuation\">)</span>\n<span class=\"line-number\">42:</span>         <span class=\"token function\">header</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Content-Length: \"</span> <span class=\"token punctuation\">.</span> <span class=\"token function\">filesize</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$filename</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">43:</span> \n<span class=\"line-number\">44:</span>         <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Read the file <span class=\"token operator\">and</span> output its contents",
+  "line": 39,
+  "start": 34,
+  "end": 45,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 22,
+  "file": "/Users/mano/thesis/drek/test/mock/app/random.php",
+  "filetype": "php",
+  "search": "\\bpassword_hash\\s*\\(\\s*\\$password,\\s*PASSWORD_BCRYPT\\b",
+  "match": "<span class=\"line-number\">7:</span> } <span class=\"token keyword\">else</span> {\n<span class=\"line-number\">8:</span>     echo <span class=\"token string\">'Invalid password.'</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">9:</span> }\n<span class=\"line-number\">10:</span> function <span class=\"token function\">hashPassword</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$password</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">11:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Use the PASSWORD_BCRYPT algorithm <span class=\"token keyword\">with</span> the recommended cost parameter\n<span class=\"highlight\"><span class=\"line-number\">12:</span>     <span class=\"token variable\">$hashedPassword</span> <span class=\"token operator\">=</span> <span class=\"token function\">password_hash</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$password</span><span class=\"token punctuation\">,</span> PASSWORD_BCRYPT<span class=\"token punctuation\">,</span> <span class=\"token punctuation\">[</span><span class=\"token string\">'cost'</span> <span class=\"token operator\">=</span><span class=\"token operator\">></span> <span class=\"token number\">12</span><span class=\"token punctuation\">]</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">13:</span> \n<span class=\"line-number\">14:</span>     return <span class=\"token variable\">$hashedPassword</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">15:</span> }\n<span class=\"line-number\">16:</span> \n<span class=\"line-number\">17:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Example usage",
+  "line": 12,
+  "start": 7,
+  "end": 18,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 1,
+  "file": "/Users/mano/thesis/drek/test/mock/app/about.php",
+  "filetype": "php",
+  "search": "\\s\\$_GET",
+  "match": "<span class=\"line-number\">10:</span> <span class=\"token variable\">$password</span> <span class=\"token operator\">=</span> <span class=\"token string\">\"bf6318df-db7d-489b-aa55-02535454a9f2\"</span>\n<span class=\"line-number\">11:</span> \n<span class=\"line-number\">12:</span> <span class=\"token variable\">$app</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">get</span><span class=\"token punctuation\">(</span><span class=\"token string\">'/profile'</span><span class=\"token punctuation\">,</span> <span class=\"token function\">function</span><span class=\"token punctuation\">(</span>Silex\\Application <span class=\"token variable\">$app</span><span class=\"token punctuation\">)</span>{\n<span class=\"line-number\">13:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">*</span><span class=\"token operator\">*</span> <span class=\"token variable\">@var</span> PDO <span class=\"token variable\">$db</span> <span class=\"token operator\">*</span><span class=\"token operator\">/</span>\n<span class=\"line-number\">14:</span>     <span class=\"token variable\">$db</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$app</span><span class=\"token punctuation\">[</span><span class=\"token string\">'db'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">15:</span>     <span class=\"token variable\">$id</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_GET</span><span class=\"token punctuation\">[</span><span class=\"token string\">'id'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">16:</span> \n<span class=\"line-number\">17:</span>     <span class=\"token variable\">$statement</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$db</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">query</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"SELECT * FROM users WHERE id = $id\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">18:</span> \n<span class=\"line-number\">19:</span>     <span class=\"token variable\">$results</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$statement</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">fetchAll</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">20:</span>     <span class=\"token variable\">$user</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$results</span><span class=\"token punctuation\">[</span><span class=\"token number\">0</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 15,
+  "start": 10,
+  "end": 21,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 6,
+  "file": "/Users/mano/thesis/drek/test/mock/app/contact.php",
+  "filetype": "php",
+  "search": "\\s\\$_GET",
+  "match": "<span class=\"line-number\">35:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Check <span class=\"token keyword\">if</span> the file extension is <span class=\"token keyword\">in</span> the whitelist\n<span class=\"line-number\">36:</span>     return <span class=\"token function\">in_array</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$fileExtension</span><span class=\"token punctuation\">,</span> <span class=\"token variable\">$allowedExtensions</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">37:</span> }\n<span class=\"line-number\">38:</span> \n<span class=\"line-number\">39:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Example usage\n<span class=\"highlight\"><span class=\"line-number\">40:</span> <span class=\"token variable\">$userInput</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_GET</span><span class=\"token punctuation\">[</span><span class=\"token string\">'file'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">; // Replace with proper user input validation</span></span>\n<span class=\"line-number\">41:</span> \n<span class=\"line-number\">42:</span> <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">isSafeFileInclusion</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$userInput</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">43:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Use the file safely\n<span class=\"line-number\">44:</span>     <span class=\"token function\">include</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$userInput</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">45:</span> } <span class=\"token keyword\">else</span> {",
+  "line": 40,
+  "start": 35,
+  "end": 46,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 24,
+  "file": "/Users/mano/thesis/drek/test/mock/app/test.php",
+  "filetype": "php",
+  "search": "\\s\\$_GET",
+  "match": "<span class=\"line-number\">31:</span>         echo <span class=\"token string\">\"Unauthorized command attempt: $command\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">32:</span>     }\n<span class=\"line-number\">33:</span> }\n<span class=\"line-number\">34:</span> \n<span class=\"line-number\">35:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Example usage\n<span class=\"highlight\"><span class=\"line-number\">36:</span> <span class=\"token variable\">$commandToExecute</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_GET</span><span class=\"token punctuation\">[</span><span class=\"token string\">'command'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">; // Replace with proper user input validation</span></span>\n<span class=\"line-number\">37:</span> <span class=\"token function\">safeShellExec</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$commandToExecute</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">38:</span> function <span class=\"token function\">hasDangerousShellFunctions</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$code</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">39:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">/</span> List of potentially dangerous shell execution functions\n<span class=\"line-number\">40:</span>     <span class=\"token variable\">$dangerousFunctions</span> <span class=\"token operator\">=</span> <span class=\"token punctuation\">[</span><span class=\"token string\">'shell_exec'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'exec'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'passthru'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'system'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'proc_open'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'popen'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">41:</span> ",
+  "line": 36,
+  "start": 31,
+  "end": 42,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 2,
+  "file": "/Users/mano/thesis/drek/test/mock/app/about.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">41:</span> \n<span class=\"line-number\">42:</span> <span class=\"token variable\">$app</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">post</span><span class=\"token punctuation\">(</span><span class=\"token string\">'/login'</span><span class=\"token punctuation\">,</span> <span class=\"token function\">function</span><span class=\"token punctuation\">(</span>Silex\\Application <span class=\"token variable\">$app</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">43:</span> \n<span class=\"line-number\">44:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">*</span><span class=\"token operator\">*</span> <span class=\"token variable\">@var</span> PDO <span class=\"token variable\">$db</span> <span class=\"token operator\">*</span><span class=\"token operator\">/</span>\n<span class=\"line-number\">45:</span>     <span class=\"token variable\">$db</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$app</span><span class=\"token punctuation\">[</span><span class=\"token string\">'db'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">46:</span>     <span class=\"token variable\">$username</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">47:</span>     <span class=\"token variable\">$password</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'password'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">48:</span>     <span class=\"token variable\">$statement</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$db</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">query</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"SELECT * FROM users WHERE username = '$username' AND password = '$password'\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">49:</span>     <span class=\"token variable\">$results</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$statement</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">fetchAll</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">50:</span>     <span class=\"token function\">if</span><span class=\"token punctuation\">(</span><span class=\"token function\">count</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$results</span><span class=\"token punctuation\">)</span> <span class=\"token operator\">></span> <span class=\"token number\">0</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">51:</span>         return <span class=\"token string\">\"Authenticated as \"</span> <span class=\"token punctuation\">.</span> <span class=\"token variable\">$results</span><span class=\"token punctuation\">[</span><span class=\"token number\">0</span><span class=\"token punctuation\">]</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 46,
+  "start": 41,
+  "end": 52,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 3,
+  "file": "/Users/mano/thesis/drek/test/mock/app/about.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">42:</span> <span class=\"token variable\">$app</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">post</span><span class=\"token punctuation\">(</span><span class=\"token string\">'/login'</span><span class=\"token punctuation\">,</span> <span class=\"token function\">function</span><span class=\"token punctuation\">(</span>Silex\\Application <span class=\"token variable\">$app</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">43:</span> \n<span class=\"line-number\">44:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">*</span><span class=\"token operator\">*</span> <span class=\"token variable\">@var</span> PDO <span class=\"token variable\">$db</span> <span class=\"token operator\">*</span><span class=\"token operator\">/</span>\n<span class=\"line-number\">45:</span>     <span class=\"token variable\">$db</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$app</span><span class=\"token punctuation\">[</span><span class=\"token string\">'db'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">46:</span>     <span class=\"token variable\">$username</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">47:</span>     <span class=\"token variable\">$password</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'password'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">48:</span>     <span class=\"token variable\">$statement</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$db</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">query</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"SELECT * FROM users WHERE username = '$username' AND password = '$password'\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">49:</span>     <span class=\"token variable\">$results</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$statement</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">fetchAll</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">50:</span>     <span class=\"token function\">if</span><span class=\"token punctuation\">(</span><span class=\"token function\">count</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$results</span><span class=\"token punctuation\">)</span> <span class=\"token operator\">></span> <span class=\"token number\">0</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">51:</span>         return <span class=\"token string\">\"Authenticated as \"</span> <span class=\"token punctuation\">.</span> <span class=\"token variable\">$results</span><span class=\"token punctuation\">[</span><span class=\"token number\">0</span><span class=\"token punctuation\">]</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">52:</span>     } <span class=\"token keyword\">else</span> {",
+  "line": 47,
+  "start": 42,
+  "end": 53,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 4,
+  "file": "/Users/mano/thesis/drek/test/mock/app/about.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">60:</span> <span class=\"token function\">session_start</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">61:</span> <span class=\"token variable\">$username</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">62:</span> \n<span class=\"line-number\">63:</span> \n<span class=\"line-number\">64:</span> \n<span class=\"highlight\"><span class=\"line-number\">65:</span> <span class=\"token variable\">$userId</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'userId'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">66:</span> \n<span class=\"line-number\">67:</span> \n<span class=\"line-number\">68:</span> <span class=\"token variable\">$password</span> <span class=\"token operator\">=</span> <span class=\"token string\">\"user_password\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">69:</span> <span class=\"token variable\">$hashedPassword</span> <span class=\"token operator\">=</span> <span class=\"token function\">md5</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$password</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">70:</span> ",
+  "line": 65,
+  "start": 60,
+  "end": 71,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 7,
+  "file": "/Users/mano/thesis/drek/test/mock/app/contact.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">1:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">2:</span> <span class=\"token function\">session_start</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">3:</span> <span class=\"token variable\">$userid</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'user_id'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">4:</span> <span class=\"token variable\">$type</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'type'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">5:</span> <span class=\"token variable\">$date</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'date'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">6:</span> <span class=\"token variable\">$time</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'time'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">7:</span> <span class=\"token variable\">$appt</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'appid'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">8:</span> <span class=\"token variable\">$purpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'purpose'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">9:</span> ",
+  "line": 4,
+  "start": 1,
+  "end": 10,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 8,
+  "file": "/Users/mano/thesis/drek/test/mock/app/contact.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">1:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">2:</span> <span class=\"token function\">session_start</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">3:</span> <span class=\"token variable\">$userid</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'user_id'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">4:</span> <span class=\"token variable\">$type</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'type'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">5:</span> <span class=\"token variable\">$date</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'date'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">6:</span> <span class=\"token variable\">$time</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'time'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">7:</span> <span class=\"token variable\">$appt</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'appid'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">8:</span> <span class=\"token variable\">$purpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'purpose'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">9:</span> \n<span class=\"line-number\">10:</span> <span class=\"token variable\">$conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">'localhost'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'Journal'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 5,
+  "start": 1,
+  "end": 11,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 9,
+  "file": "/Users/mano/thesis/drek/test/mock/app/contact.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">1:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">2:</span> <span class=\"token function\">session_start</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">3:</span> <span class=\"token variable\">$userid</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'user_id'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">4:</span> <span class=\"token variable\">$type</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'type'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">5:</span> <span class=\"token variable\">$date</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'date'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">6:</span> <span class=\"token variable\">$time</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'time'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">7:</span> <span class=\"token variable\">$appt</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'appid'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">8:</span> <span class=\"token variable\">$purpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'purpose'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">9:</span> \n<span class=\"line-number\">10:</span> <span class=\"token variable\">$conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">'localhost'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'Journal'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">11:</span> <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {",
+  "line": 6,
+  "start": 1,
+  "end": 12,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 10,
+  "file": "/Users/mano/thesis/drek/test/mock/app/contact.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">3:</span> <span class=\"token variable\">$userid</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'user_id'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">4:</span> <span class=\"token variable\">$type</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'type'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">5:</span> <span class=\"token variable\">$date</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'date'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">6:</span> <span class=\"token variable\">$time</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'time'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">7:</span> <span class=\"token variable\">$appt</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'appid'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">8:</span> <span class=\"token variable\">$purpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'purpose'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">9:</span> \n<span class=\"line-number\">10:</span> <span class=\"token variable\">$conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">'localhost'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'Journal'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">11:</span> <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">12:</span>   <span class=\"token function\">printf</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Connect failed: %s\\n\"</span><span class=\"token punctuation\">,</span> <span class=\"token function\">mysqli_connect_error</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">13:</span>   <span class=\"token function\">exit</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 8,
+  "start": 3,
+  "end": 14,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 11,
+  "file": "/Users/mano/thesis/drek/test/mock/app/index.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">1:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">2:</span> <span class=\"token function\">session_start</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">3:</span> <span class=\"token variable\">$userid</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'user_id'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">4:</span> <span class=\"token variable\">$type</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'type'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">5:</span> <span class=\"token variable\">$date</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'date'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">6:</span> <span class=\"token variable\">$time</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'time'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">7:</span> <span class=\"token variable\">$purpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'purpose'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">8:</span> \n<span class=\"line-number\">9:</span> <span class=\"token variable\">$conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">'localhost'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'Journal'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 4,
+  "start": 1,
+  "end": 10,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 12,
+  "file": "/Users/mano/thesis/drek/test/mock/app/index.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">1:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">2:</span> <span class=\"token function\">session_start</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">3:</span> <span class=\"token variable\">$userid</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'user_id'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">4:</span> <span class=\"token variable\">$type</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'type'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">5:</span> <span class=\"token variable\">$date</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'date'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">6:</span> <span class=\"token variable\">$time</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'time'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">7:</span> <span class=\"token variable\">$purpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'purpose'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">8:</span> \n<span class=\"line-number\">9:</span> <span class=\"token variable\">$conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">'localhost'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'Journal'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">10:</span> <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {",
+  "line": 5,
+  "start": 1,
+  "end": 11,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 13,
+  "file": "/Users/mano/thesis/drek/test/mock/app/index.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">1:</span> <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">2:</span> <span class=\"token function\">session_start</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">3:</span> <span class=\"token variable\">$userid</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'user_id'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">4:</span> <span class=\"token variable\">$type</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'type'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">5:</span> <span class=\"token variable\">$date</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'date'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">6:</span> <span class=\"token variable\">$time</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'time'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">7:</span> <span class=\"token variable\">$purpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'purpose'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">8:</span> \n<span class=\"line-number\">9:</span> <span class=\"token variable\">$conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">'localhost'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'Journal'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">10:</span> <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">11:</span>   <span class=\"token function\">printf</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Connect failed: %s\\n\"</span><span class=\"token punctuation\">,</span> <span class=\"token function\">mysqli_connect_error</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 6,
+  "start": 1,
+  "end": 12,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 14,
+  "file": "/Users/mano/thesis/drek/test/mock/app/index.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">2:</span> <span class=\"token function\">session_start</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">3:</span> <span class=\"token variable\">$userid</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'user_id'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">4:</span> <span class=\"token variable\">$type</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'type'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">5:</span> <span class=\"token variable\">$date</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'date'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">6:</span> <span class=\"token variable\">$time</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'time'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">7:</span> <span class=\"token variable\">$purpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'purpose'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">8:</span> \n<span class=\"line-number\">9:</span> <span class=\"token variable\">$conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">'localhost'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'root'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'Journal'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">10:</span> <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">11:</span>   <span class=\"token function\">printf</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Connect failed: %s\\n\"</span><span class=\"token punctuation\">,</span> <span class=\"token function\">mysqli_connect_error</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">12:</span>   <span class=\"token function\">exit</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 7,
+  "start": 2,
+  "end": 13,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 16,
+  "file": "/Users/mano/thesis/drek/test/mock/app/mainpage.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">63:</span>         <span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>form<span class=\"token operator\">></span>\n<span class=\"line-number\">64:</span> \n<span class=\"line-number\">65:</span>     <span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>div<span class=\"token operator\">></span>\n<span class=\"line-number\">66:</span>     <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">67:</span>     <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span>!<span class=\"token function\">empty</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$_POST</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"highlight\"><span class=\"line-number\">68:</span>         <span class=\"token variable\">$mytype</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"type\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">69:</span>         <span class=\"token variable\">$mydate</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"date\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">70:</span>         <span class=\"token variable\">$mytime</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"time\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">71:</span>         <span class=\"token variable\">$mypurpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"purpose\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">72:</span>         <span class=\"token variable\">$my_db_conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"localhost\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"root\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"root\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"Journal\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">73:</span>         <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {",
+  "line": 68,
+  "start": 63,
+  "end": 74,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 17,
+  "file": "/Users/mano/thesis/drek/test/mock/app/mainpage.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">64:</span> \n<span class=\"line-number\">65:</span>     <span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>div<span class=\"token operator\">></span>\n<span class=\"line-number\">66:</span>     <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">67:</span>     <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span>!<span class=\"token function\">empty</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$_POST</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">68:</span>         <span class=\"token variable\">$mytype</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"type\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">69:</span>         <span class=\"token variable\">$mydate</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"date\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">70:</span>         <span class=\"token variable\">$mytime</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"time\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">71:</span>         <span class=\"token variable\">$mypurpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"purpose\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">72:</span>         <span class=\"token variable\">$my_db_conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"localhost\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"root\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"root\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"Journal\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">73:</span>         <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">74:</span>             <span class=\"token function\">printf</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Connect failed: %s\\n\"</span><span class=\"token punctuation\">,</span> <span class=\"token function\">mysqli_connect_error</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 69,
+  "start": 64,
+  "end": 75,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 18,
+  "file": "/Users/mano/thesis/drek/test/mock/app/mainpage.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">65:</span>     <span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>div<span class=\"token operator\">></span>\n<span class=\"line-number\">66:</span>     <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">67:</span>     <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span>!<span class=\"token function\">empty</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$_POST</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">68:</span>         <span class=\"token variable\">$mytype</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"type\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">69:</span>         <span class=\"token variable\">$mydate</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"date\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">70:</span>         <span class=\"token variable\">$mytime</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"time\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">71:</span>         <span class=\"token variable\">$mypurpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"purpose\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">72:</span>         <span class=\"token variable\">$my_db_conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"localhost\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"root\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"root\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"Journal\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">73:</span>         <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">74:</span>             <span class=\"token function\">printf</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Connect failed: %s\\n\"</span><span class=\"token punctuation\">,</span> <span class=\"token function\">mysqli_connect_error</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">75:</span>             <span class=\"token function\">exit</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 70,
+  "start": 65,
+  "end": 76,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 19,
+  "file": "/Users/mano/thesis/drek/test/mock/app/mainpage.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">66:</span>     <span class=\"token operator\">&lt;</span><span class=\"token operator\">?</span>php\n<span class=\"line-number\">67:</span>     <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span>!<span class=\"token function\">empty</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$_POST</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">68:</span>         <span class=\"token variable\">$mytype</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"type\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">69:</span>         <span class=\"token variable\">$mydate</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"date\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">70:</span>         <span class=\"token variable\">$mytime</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"time\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">71:</span>         <span class=\"token variable\">$mypurpose</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">\"purpose\"</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">72:</span>         <span class=\"token variable\">$my_db_conn</span> <span class=\"token operator\">=</span> new <span class=\"token function\">mysqli</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"localhost\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"root\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"root\"</span><span class=\"token punctuation\">,</span> <span class=\"token string\">\"Journal\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">73:</span>         <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">mysqli_connect_errno</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">74:</span>             <span class=\"token function\">printf</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Connect failed: %s\\n\"</span><span class=\"token punctuation\">,</span> <span class=\"token function\">mysqli_connect_error</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">75:</span>             <span class=\"token function\">exit</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">76:</span>         }",
+  "line": 71,
+  "start": 66,
+  "end": 77,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 21,
+  "file": "/Users/mano/thesis/drek/test/mock/app/random.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">13:</span> \n<span class=\"line-number\">14:</span>     return <span class=\"token variable\">$hashedPassword</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">15:</span> }\n<span class=\"line-number\">16:</span> \n<span class=\"line-number\">17:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Example usage\n<span class=\"highlight\"><span class=\"line-number\">18:</span> <span class=\"token variable\">$userInputPassword</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'password'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">; // Replace with proper user input validation</span></span>\n<span class=\"line-number\">19:</span> \n<span class=\"line-number\">20:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Hash the user's password\n<span class=\"line-number\">21:</span> <span class=\"token variable\">$hashedPassword</span> <span class=\"token operator\">=</span> <span class=\"token function\">hashPassword</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$userInputPassword</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">22:</span> \n<span class=\"line-number\">23:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Store <span class=\"token operator\">or</span> use <span class=\"token variable\">$hashedPassword</span> as needed",
+  "line": 18,
+  "start": 13,
+  "end": 24,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 25,
+  "file": "/Users/mano/thesis/drek/test/mock/app/test.php",
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "match": "<span class=\"line-number\">47:</span> \n<span class=\"line-number\">48:</span>     return <span class=\"token boolean\">false</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">49:</span> }\n<span class=\"line-number\">50:</span> \n<span class=\"line-number\">51:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Example usage\n<span class=\"highlight\"><span class=\"line-number\">52:</span> <span class=\"token variable\">$codeSnippet</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'code'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">; // Replace with proper user input validation</span></span>\n<span class=\"line-number\">53:</span> <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">hasDangerousShellFunctions</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$codeSnippet</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">54:</span>     echo <span class=\"token string\">\"Potentially dangerous shell execution function detected!\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">55:</span> } <span class=\"token keyword\">else</span> {\n<span class=\"line-number\">56:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Execute the code <span class=\"token operator\">or</span> take other appropriate actions\n<span class=\"line-number\">57:</span>     <span class=\"token function\">eval</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$codeSnippet</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 52,
+  "start": 47,
+  "end": 58,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 5,
+  "file": "/Users/mano/thesis/drek/test/mock/app/about.php",
+  "filetype": "php",
+  "search": "\\s\\$password",
+  "match": "<span class=\"line-number\">42:</span> <span class=\"token variable\">$app</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">post</span><span class=\"token punctuation\">(</span><span class=\"token string\">'/login'</span><span class=\"token punctuation\">,</span> <span class=\"token function\">function</span><span class=\"token punctuation\">(</span>Silex\\Application <span class=\"token variable\">$app</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">43:</span> \n<span class=\"line-number\">44:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">*</span><span class=\"token operator\">*</span> <span class=\"token variable\">@var</span> PDO <span class=\"token variable\">$db</span> <span class=\"token operator\">*</span><span class=\"token operator\">/</span>\n<span class=\"line-number\">45:</span>     <span class=\"token variable\">$db</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$app</span><span class=\"token punctuation\">[</span><span class=\"token string\">'db'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">46:</span>     <span class=\"token variable\">$username</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">47:</span>     <span class=\"token variable\">$password</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'password'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">48:</span>     <span class=\"token variable\">$statement</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$db</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">query</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"SELECT * FROM users WHERE username = '$username' AND password = '$password'\"</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">49:</span>     <span class=\"token variable\">$results</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$statement</span><span class=\"token operator\">-</span><span class=\"token operator\">></span><span class=\"token function\">fetchAll</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">50:</span>     <span class=\"token function\">if</span><span class=\"token punctuation\">(</span><span class=\"token function\">count</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$results</span><span class=\"token punctuation\">)</span> <span class=\"token operator\">></span> <span class=\"token number\">0</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">51:</span>         return <span class=\"token string\">\"Authenticated as \"</span> <span class=\"token punctuation\">.</span> <span class=\"token variable\">$results</span><span class=\"token punctuation\">[</span><span class=\"token number\">0</span><span class=\"token punctuation\">]</span><span class=\"token punctuation\">[</span><span class=\"token string\">'username'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">52:</span>     } <span class=\"token keyword\">else</span> {",
+  "line": 47,
+  "start": 42,
+  "end": 53,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 20,
+  "file": "/Users/mano/thesis/drek/test/mock/app/mainpage.php",
+  "filetype": "php",
+  "search": "\\s\\<!--",
+  "match": "<span class=\"line-number\">9:</span> <span class=\"token variable\">$mytime</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_SESSION</span><span class=\"token punctuation\">[</span><span class=\"token string\">'time'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">10:</span> <span class=\"token operator\">?</span><span class=\"token operator\">></span>\n<span class=\"line-number\">11:</span> <span class=\"token operator\">&lt;</span>html<span class=\"token operator\">></span>\n<span class=\"line-number\">12:</span> \n<span class=\"line-number\">13:</span> <span class=\"token operator\">&lt;</span>head<span class=\"token operator\">></span>\n<span class=\"highlight\"><span class=\"line-number\">14:</span>         <span class=\"token operator\">&lt;</span>!<span class=\"token operator\">-</span><span class=\"token operator\">-</span> i got this from w3 school <span class=\"token keyword\">to</span> add the icon <span class=\"token operator\">-</span><span class=\"token operator\">-</span><span class=\"token operator\">></span></span>\n<span class=\"line-number\">15:</span>         <span class=\"token operator\">&lt;</span>link rel<span class=\"token operator\">=</span><span class=\"token string\">\"stylesheet\"</span> href<span class=\"token operator\">=</span><span class=\"token string\">\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\"</span><span class=\"token operator\">></span>\n<span class=\"line-number\">16:</span> \n<span class=\"line-number\">17:</span> <span class=\"token operator\">&lt;</span>script src<span class=\"token operator\">=</span><span class=\"token string\">'https://kit.fontawesome.com/a076d05399.js'</span> crossorigin<span class=\"token operator\">=</span><span class=\"token string\">'anonymous'</span><span class=\"token operator\">></span><span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>script<span class=\"token operator\">></span>\n<span class=\"line-number\">18:</span>     <span class=\"token operator\">&lt;</span>script src<span class=\"token operator\">=</span><span class=\"token string\">\"mystyle.js\"</span> defer<span class=\"token operator\">></span><span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>script<span class=\"token operator\">></span>\n<span class=\"line-number\">19:</span>     <span class=\"token operator\">&lt;</span>script type<span class=\"token operator\">=</span><span class=\"token string\">\"text/javascript\"</span> src<span class=\"token operator\">=</span><span class=\"token string\">\"validate.js\"</span><span class=\"token operator\">></span><span class=\"token operator\">&lt;</span><span class=\"token operator\">/</span>script<span class=\"token operator\">></span>",
+  "line": 14,
+  "start": 9,
+  "end": 20,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 26,
+  "file": "/Users/mano/thesis/drek/test/mock/app/test.php",
+  "filetype": "php",
+  "search": "\\seval\\s*\\(",
+  "match": "<span class=\"line-number\">52:</span> <span class=\"token variable\">$codeSnippet</span> <span class=\"token operator\">=</span> <span class=\"token variable\">$_POST</span><span class=\"token punctuation\">[</span><span class=\"token string\">'code'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">; // Replace with proper user input validation</span>\n<span class=\"line-number\">53:</span> <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token function\">hasDangerousShellFunctions</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$codeSnippet</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> {\n<span class=\"line-number\">54:</span>     echo <span class=\"token string\">\"Potentially dangerous shell execution function detected!\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">55:</span> } <span class=\"token keyword\">else</span> {\n<span class=\"line-number\">56:</span>     <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Execute the code <span class=\"token operator\">or</span> take other appropriate actions\n<span class=\"highlight\"><span class=\"line-number\">57:</span>     <span class=\"token function\">eval</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$codeSnippet</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">58:</span> }\n<span class=\"line-number\">59:</span> <span class=\"token operator\">?</span><span class=\"token operator\">></span>\n<span class=\"line-number\">60:</span> ",
+  "line": 57,
+  "start": 52,
+  "end": 61,
+  "severity": "unknown",
+  "note": ""
+ }
+];
+    var searches   = [
+ {
+  "filetype": "php",
+  "search": "\\b(?:mysql_query|mysqli_query|pdo->query)\\s*\\(\\s*",
+  "count": {
+   "\"'": {
+    "?(?:SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|UNION)\\b": 1
+   }
+  }
+ },
+ {
+  "filetype": "php",
+  "search": "\\b(?:shell_exec|exec|passthru|system|proc_open|popen)\\s*\\(",
+  "count": 1
+ },
+ {
+  "filetype": "php",
+  "search": "\\bheader\\s*\\(\\s*",
+  "count": {
+   "'\"": {
+    "?Content-Disposition:\\s*attachment\\b": 1
+   }
+  }
+ },
+ {
+  "filetype": "php",
+  "search": "\\bpassword_hash\\s*\\(\\s*\\$password,\\s*PASSWORD_BCRYPT\\b",
+  "count": 1
+ },
+ {
+  "filetype": "php",
+  "search": "\\s\\$_GET",
+  "count": 3
+ },
+ {
+  "filetype": "php",
+  "search": "\\s\\$_POST",
+  "count": 17
+ },
+ {
+  "filetype": "php",
+  "search": "\\s\\$password",
+  "count": 1
+ },
+ {
+  "filetype": "php",
+  "search": "\\s\\<!--",
+  "count": 1
+ },
+ {
+  "filetype": "php",
+  "search": "\\seval\\s*\\(",
+  "count": 1
+ }
+];
+    var storage    = 'drek-a0e90578-e7fe-4c1b-9136-999386d1bd75';
+    var severities = ["ok","warn","critical","unknown"];
+    document.addEventListener('DOMContentLoaded', function(event) {
+
+  // KLUDGE: this is disgusting
+  var saved = localStorage.getItem(storage);
+  if (saved) {
+    JSON.parse(saved).forEach(function (data, index) {
+      _.merge(matches[index], data);
+    });
+  }
+
+  // component for individual matches
+  Vue.component('matches', {
+    props    : [ 'match' ],
+    template : '#match',
+
+    methods  : {
+
+      // toggles match severity
+      severity: function (value) {
+
+        // clicking on a specific severity twice should set severity back to
+        // 'unknown'
+        this.match.severity = (this.match.severity === value)
+          ? 'unknown'
+          : value ;
+
+        // emit a 'severity' event to trigger a save to localStorage
+        this.$emit('severity');
+      },
+
+      // is invoked when notes are added to a match
+      annotate: function () {
+        // emit an 'annotate' event to trigger a save to localStorage
+        this.$emit('annotate');
+      }
+    },
+
+  });
+
+  // entire Vue app
+  var app = new Vue({
+    el: '#app',
+    data: {
+      filetype   : filetype,
+      filetypes  : filetypes,
+      matches    : matches,
+      searches   : searches,
+      severities : severities,
+      show       : {
+        ok       : true,
+        warn     : true,
+        critical : true,
+        unknown  : true,
+      },
+    },
+
+    computed: {
+
+      // structure the matches into groups by filetype and search string
+      groups: function () {
+
+        // return matches for all filetypes
+        if (this.filetype === 'all') {
+          return _(matches)
+            .groupBy('search')
+            .toPairs()
+            .value();
+        }
+
+        // return matches for the specified filetype only
+        return _(matches)
+          .filter({ filetype: this.filetype })
+          .groupBy('search')
+          .toPairs()
+          .value();
+      },
+
+      // filter the "match" menu links by filetype
+      filteredSearches: function () {
+        return (this.filetype === 'all')
+          ? this.searches
+          : _(this.searches)
+            .filter({ filetype: this.filetype })
+            .value();
+      },
+
+    },
+
+    methods: {
+
+      // filter matches by filetype
+      filterFiletype: function (e) {
+        this.filetype = e.target.getAttribute('data-filetype');
+      },
+
+      // filter matches by severity
+      filterSeverity: function (e) {
+        var severity = e.target.getAttribute('data-severity');
+        this.show[severity] = !this.show[severity];
+      },
+
+      // shows/hides sections
+      hideSection: function (e) {
+        var section = e.target.parentElement.parentElement;
+        var show    = (section.getAttribute('data-show') === 'true')
+          ? 'false'
+          : 'true';
+        var text    = (e.target.text === 'Hide')
+          ? 'Show'
+          : 'Hide';
+
+        e.target.text = text;
+        section.setAttribute('data-show', show);
+      },
+
+      // save match state to localStorage
+      save: function () {
+
+        // save only the mutable match data to use localStorage efficiently
+        var data = this.matches.map(function (match) {
+          return {
+            note     : match.note,
+            severity : match.severity,
+          };
+        });
+
+        // write data to localStorage
+        localStorage.setItem(storage, JSON.stringify(data));
+      }
+
+    },
+
+  });
+});
+
+  </script>
+
+</body>
+</html>
+
