@@ -13,8 +13,13 @@
 <body class='container'>
 
   <header class='blankslate blankslate-clean-background'>
-    <h1><%= meta.project %></h1>
-    <p class='text-gray'><%= meta.date %></p>
+
+    <h1 class="white">Staffordshire University</h1>
+    <h1 class="white">Emmanuel Oliseh</h1>
+    
+    
+    <h1 class="white"><%= meta.project %></h1>
+    <p class="white"><%= meta.date %></p>
   </header>
 
   <div
@@ -41,9 +46,19 @@
     </header>
 
     <aside class='one-fourth column'>
-    
+      <!-- match navigation -->
+      <nav class='menu'>
+        <span class='menu-heading'>Matches</span>
+        <a v-once v-for='search in filteredSearches'
+          :href='"#" + search.search'
+          class='menu-item'>
+          <code>{{ search.search }}</code>
+          <span class='counter'>{{ search.count }}</span>
+        </a>
+      </nav>
+      
       <!-- filetype filter -->
-      <p class='text-gray'>Filetype:</p>
+      <p >Filetype:</p>
       <ul class='filter-list mb-5'>
         <li v-for='pair in filetypes'>
           <a 
@@ -69,16 +84,7 @@
         </li>
       </ul>
 
-       <!-- match navigation -->
-      <nav class='menu'>
-        <span class='menu-heading'>Matches</span>
-        <a v-once v-for='search in filteredSearches'
-          :href='"#" + search.search'
-          class='menu-item'>
-          <code>{{ search.search }}</code>
-          <span class='counter'>{{ search.count }}</span>
-        </a>
-      </nav>
+    
 
     </aside>
 
@@ -87,7 +93,7 @@
       <!-- match groups -->
       <section v-for='group in groups' data-show='true'>
         <a :name='group[0]'></a>
-        <h2 class='border-bottom p-3'>{{ group[0] }}
+        <h2 class='border-bottom p-3'>Pattern Found for: '{{ group[0] }}'
           <a class='show-hide' @click='hideSection'>Hide</a>
         </h2>
 
@@ -106,15 +112,16 @@
 
   <!-- match template -->
   <template id='match'>
-    <div class='match p-3' :data-severity='match.severity'>
-      <span class='match-id text-gray'>ID: {{ match.id }}</span>
+    <div class='match p-4' :data-severity='match.severity'>
+  
       <p class='severity'>
+        Set as:
         <a data-severity='unknown'>unknown</a>
-        <a data-severity='ok'       @click='severity("ok")'>ok</a>
-        <a data-severity='warn'     @click='severity("warn")'>warn</a>
-        <a data-severity='critical' @click='severity("critical")'>critical</a>
+        <a data-severity='ok'       @click='severity("ok")'>Resolve</a>
+        <a data-severity='warn'     @click='severity("warn")'>Warn</a>
+        <a data-severity='critical' @click='severity("critical")'>Critical</a>
       </p>
-      <h3>{{ match.file }}:<span class='line-number'>{{ match.line }}</span></h3>
+      <h3 class="text-gray">File Path:{{ match.file }} at line: <span class='line-number'>{{ match.line }}</span></h3>
       <code v-html='match.match'></code>
       <textarea
         placeholder='Notes'

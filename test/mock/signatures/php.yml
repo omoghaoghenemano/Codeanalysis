@@ -2,12 +2,29 @@
 filetypes:
   - php
 
+errornames:
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+  - error
+
 patterns:
   - \s\$_GET
   - \s\$_POST
   - \seval\s*\(
   - \s\<!-- 
-  - \b(?:mysql_query|mysqli_query|pdo->query)\s*\(\s*["']?(?:SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|UNION)\b
   - \b(?:echo|print|print_r|die|exit)\s*\(\s*\$_(GET|POST|REQUEST|COOKIE|SERVER|ENV|FILES)\b
   - \b(?:include|require|include_once|require_once)\s*\(\s*(?:"|')(?:\.\.?\/)+\w+
   - \bmove_uploaded_file\s*\(\s*\$_FILES\[
@@ -19,3 +36,4 @@ patterns:
   - \bheader\s*\(\s*['"]?Content-Disposition:\s*attachment\b
   - \s\$password
   - \s*on\w+\s*=\s*['"].*['"]
+    - \b(?:mysql_query|mysqli_query|pdo->query)\s*\(\s*["']?(?:SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|UNION)\b

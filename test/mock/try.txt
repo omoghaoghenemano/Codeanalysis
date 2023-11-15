@@ -1,0 +1,1 @@
+node /Users/mano/thesis/drek/app '/Users/mano/thesis/drek/test/mock/app/' -s /Users/mano/thesis/drek/test/mock/signatures/*php.yml -p 'About' > ./drek-report.html
