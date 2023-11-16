@@ -7,7 +7,7 @@ module.exports = function(options, config) {
   // is not used under non-testing circumstances.
   if (! config) {
     // load configs from ~/.drekrc
-    config = rc('drek', {
+    config = rc('analysis', {
 
         // HTML report date formatting 
         dateFormat : 'D MMMM YYYY, hh:mm A',

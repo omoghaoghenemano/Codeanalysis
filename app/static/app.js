@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     });
   }
 
-
+  
   Vue.component('matches', {
     props    : [ 'match' ],
     template : '#match',
@@ -84,7 +84,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
       filterSeverity: function (e) {
         var severity = e.target.getAttribute('data-severity');
-        this.show[severity] = !this.show[severity];
+        this.show[
+matchederror] = !this.show[severity];
       },
 
       hideSection: function (e) {

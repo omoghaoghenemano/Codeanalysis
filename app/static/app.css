@@ -16,7 +16,7 @@ header#rendering {
 }
 body{
   background-color: rgb(151, 151, 151);
-  
+
 }
 
 
@@ -77,7 +77,7 @@ aside li a[data-severity] {
 #app.showUnknown div.match[data-severity=unknown] {
   display: block;
 
-  
+
 }
 #app main section[data-show='false'] h2 {
   color: silver;
@@ -99,7 +99,7 @@ aside li a[data-severity] {
   cursor: pointer;
   float: right;
   border: 1px solid;
-  
+
 
   background-color: white;
   color: green;
@@ -114,7 +114,7 @@ div.match {
   /* code blocks */
   /* user notes */
   background-color: white; /* Set your desired background color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 div.match:hover {
   border-left: 1px solid #e5e5e5;
@@ -236,7 +236,7 @@ p.severity a[data-severity=critical]:hover {
 }
 .menu-item{
   color: black  !important;
- 
+
 }
 /* print stylesheet */
 @media print {

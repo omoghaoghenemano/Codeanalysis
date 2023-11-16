@@ -50,8 +50,12 @@ the `html` report is the primary use-case.
 
 The `html` report allows auditors to do the following:
 
-- Categorize each point-of-interest by "severity".
-- Filter points-of-interest by severity and filetype.
+- Categorize each point-of-interest by "
+
+severity".
+- Filter points-of-interest by 
+
+severity and filetype.
 - Save annotations to `localStorage`.
 - Export a PDF to share audit results.
 

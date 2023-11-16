@@ -1,13 +1,7 @@
 {
-  "name": "drek",
+  "name": "oliseh",
   "version": "1.0.3",
   "description": "A static-code-analysis tool that can be used to perform security-focused code reviews. It enables an auditor to swiftly map the attack-surface of a large application, with an emphasis on identifying development anti-patterns and footguns.",
-  "homepage": "https://github.com/chrisallenlane/drek",
-  "author": {
-    "name": "Chris Allen Lane",
-    "email": "chris@chris-allen-lane.com"
-  },
-  "license": "MIT",
   "scripts": {
     "less": "lessc app/static/app.less app/static/app.css",
     "lint": "jshint app test",
@@ -43,15 +37,6 @@
     "security",
     "static-code-analysis"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chrisallenlane/drek"
-  },
-  "bugs": {
-    "url": "https://github.com/chrisallenlane/drek/issues"
-  },
-  "bin": {
-    "drek": "app/index.js"
-  },
+  
   "main": "app/index.js"
 }

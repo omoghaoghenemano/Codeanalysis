@@ -1,9 +1,9 @@
-drek
+analysis
 
 Locates user-specified strings within a codebase.
 
 Usage:
-  drek [options] <source-directory>...
+  analysis [options] <source-directory>...
 
 Options:
   -h --help               Show this screen.
@@ -18,17 +18,17 @@ Options:
 Examples:
   
   To scan a directory and output an HTML report:
-    drek \
+    analysis \
       --project='My App' \
       --signatures='/path/to/signatures/*.yml' \
-      ./my-app > drek-scan.html
+      ./my-app > analysis-scan.html
 
   To ignore code in node_modules:
-    drek \
+    analysis \
       --project='My App' \
       --signatures='/path/to/signatures/*.yml' \
       --ignore='node_modules' \
-      ./my-app > drek-scan.html
+      ./my-app > analysis-scan.html
 
   When using wildcards with --signatures, be certain to enclose the file paths
   within quotation marks to avoid unwanted behavior from the shell!
