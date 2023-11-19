@@ -6,7 +6,7 @@ module.exports = function(options, config) {
   // NB: the `config` parameter exists strictly to allow for unit-testing. It
   // is not used under non-testing circumstances.
   if (! config) {
-    // load configs from ~/.drekrc
+   
     config = rc('analysis', {
 
         // HTML report date formatting 
