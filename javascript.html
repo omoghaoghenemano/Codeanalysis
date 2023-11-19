@@ -1,0 +1,702 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Static code analysis</title>
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Primer/3.0.1/css/primer.css'>
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-solarizedlight.min.css'>
+  
+  <style>
+  /* colors */
+/* highlighter helper function */
+/* hide the notification headers by default */
+header#no-matches,
+header#rendering {
+  display: none;
+}
+/* applied while vue.js is rendering */
+#app[v-cloak] {
+  /* hide sidebar and "matches" space */
+  /* display a blankslate notification */
+}
+#app[v-cloak] aside,
+#app[v-cloak] main {
+  display: none;
+}
+body{
+  background-color: rgb(151, 151, 151);
+
+}
+
+
+#app[v-cloak] header#rendering {
+  display: block;
+}
+/* applied when no matches are found */
+#app.nomatches {
+  /* hide sidebar and "matches" space */
+  /* display a blankslate notification */
+}
+
+
+#app.nomatches aside,
+#app.nomatches main {
+  display: none;
+}
+#app.nomatches header#no-matches {
+  display: block;
+}
+/* sidebar */
+aside li a[data-severity] {
+  color: white;
+}
+/* sidebar severity filters */
+#app.showLow aside a[data-severity=Low] {
+  color: black
+}
+#app.showLow aside a[data-severity=Low]:hover {
+  background-color: black;
+  color: white;
+}
+#app.showMedium aside a[data-severity=Medium] {
+  color: orange;
+}
+#app.showMedium aside a[data-severity=Medium]:hover {
+  background-color: orange;
+  color: white;
+}
+#app.showHigh aside a[data-severity=High] {
+  color: #bd2c00;
+}
+#app.showHigh aside a[data-severity=High]:hover {
+  background-color: #bd2c00;
+  color: white;
+}
+#app.showUnknown aside a[data-severity=unknown] {
+  color: #767676;
+}
+#app.showUnknown aside a[data-severity=unknown]:hover {
+  background-color: #767676;
+  color: white;
+}
+/* matches */
+#app.showLow div.match[data-severity=Low],
+#app.showMedium div.match[data-severity=Medium],
+#app.showHigh div.match[data-severity=High],
+#app.showUnknown div.match[data-severity=unknown] {
+  display: block;
+
+
+}
+#app main section[data-show='false'] h2 {
+  color: silver;
+}
+#app main section[data-show='false'] div.match {
+  display: none !important;
+  /* kludge */
+}
+.white{
+  color:white
+}
+.border-bottom{
+  background-color: red;
+  border: 1px solid;
+  color: white !important;
+  box-shadow: #e5e5e5;
+}
+#app main section a.show-hide {
+  cursor: pointer;
+  float: right;
+  border: 1px solid;
+
+
+  background-color: white;
+  color: green;
+  font-size: small;
+  font-weight: normal;
+}
+div.match {
+  border-left: 1px solid white;
+  display: none;
+  /* apply background colors by severity */
+  /* heading */
+  /* code blocks */
+  /* user notes */
+  background-color: white; /* Set your desired background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+div.match:hover {
+  border-left: 1px solid #e5e5e5;
+}
+div.match[data-severity=Low] {
+  background-color: #f2f8fa;
+  /* hide code samples and notes for "Low" severity matches */
+}
+div.match[data-severity=Low] code,
+div.match[data-severity=Low] textarea {
+  display: none;
+}
+div.match[data-severity=Medium] {
+  background-color: lightyellow;
+}
+div.match[data-severity=High] {
+  background-color: #ffccbd;
+}
+div.match span.match-id {
+  float: left;
+}
+div.match h3 {
+  color: white;
+  font-family: monospace;
+  font-size: small;
+  font-weight: normal;
+}
+div.match h3 span.line-number {
+  color:red;
+  font-weight: bold;
+}
+div.match code {
+  padding: 1rem;
+  background-color: #f7f7f7;
+  display: block;
+  overflow-x: scroll;
+  white-space: pre;
+}
+div.match code span.line-number {
+  color: #999;
+  padding-right: 1rem;
+}
+div.match code span.highlight {
+  background-color: lightsalmon;
+  color:white;
+  display: inline-block;
+  min-width: 100%;
+}
+div.match textarea {
+  color: #666;
+  border: 1px solid #efefef;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+/* match severity buttons */
+p.severity {
+  text-align: right;
+}
+p.severity a {
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  padding: 2px 10px;
+}
+p.severity a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+p.severity a[data-severity=unknown] {
+  display: none;
+  color: silver;
+}
+p.severity a[data-severity=Low] {
+  color: black
+}
+p.severity a[data-severity=Low]:hover {
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+}
+p.severity a[data-severity=Medium] {
+  color: orange;
+}
+p.severity a[data-severity=Medium]:hover {
+  border: 1px solid orange;
+  background-color: orange;
+  color: white;
+}
+p.severity a[data-severity=High] {
+  color: #bd2c00;
+}
+p.severity a[data-severity=High]:hover {
+  border: 1px solid #bd2c00;
+  background-color: #bd2c00;
+  color: white;
+}
+.match[data-severity=Low] p.severity a[data-severity=Low] {
+  background-color: black;
+  color: white;
+  border: 1px solid black
+}
+.match[data-severity=Medium] p.severity a[data-severity=Medium] {
+  background-color: orange;
+  color: white;
+  border: 1px solid orange;
+}
+.match[data-severity=High] p.severity a[data-severity=High] {
+  background-color: #bd2c00;
+  color: white;
+  border: 1px solid #bd2c00;
+}
+
+.one-fourth-column{
+  width: 300px ;
+}
+.menu-heading{
+  width: 100%;
+  background-color: red;
+  color: white !important;
+}
+.menu-item{
+  color: black  !important;
+
+}
+/* print stylesheet */
+@media print {
+  /* hide the navigation */
+  aside {
+    display: none;
+  }
+  /* go full-width */
+  main.three-fourths.column {
+    margin: 0 auto;
+    width: 100%;
+    background-color: green;
+  }
+  /* hide the "show/hide" links */
+  section h2 a.show-hide {
+    display: none;
+  }
+  /* hide sections marked as "hidden" */
+  section[data-show='false'] {
+    display: none;
+  }
+  /* match style */
+  .match {
+    /* don't break match divs */
+    /* @BUG: this seems poorly supported in Chrome :( */
+    break-inside: avoid;
+    /* hide the scrollbars */
+    /* hide borders */
+  }
+  .match code {
+    -webkit-print-color-adjust: exact;
+    overflow-x: hidden;
+  }
+  .match textarea {
+    border: none;
+    /* hide textareas that contain no notes */
+  }
+  .match textarea:placeholder-shown {
+    display: none;
+  }
+  /* hide the "severity" buttons */
+  .match p.severity a {
+    display: none;
+    border: none;
+  }
+  p,a{
+    color: black;
+  }
+  /* ... except for one serving as a label */
+  .match[data-severity='Low'] a[data-severity='Low'],
+  .match[data-severity='Medium'] a[data-severity='Medium'],
+  .match[data-severity='High'] a[data-severity='High'],
+  .match[data-severity='unknown'] a[data-severity='unknown'] {
+    -webkit-print-color-adjust: exact;
+    display: inline-block;
+  }
+  /* DO show "Low" matches on the PDF */
+  .match[data-severity='Low'] code,
+  .match[data-severity='Low'] textarea {
+    display: block !important;
+    /* kludge */
+  }
+}
+.filter-item{
+  background-color: white;
+}
+.selected{
+  background-color: red !important;
+}
+  </style>
+</head>
+<body class='container'>
+
+  <header class='blankslate blankslate-clean-background'>
+
+    <h1 class="white">Staffordshire University</h1>
+    <h1 class="white">Emmanuel Oliseh</h1>
+    
+    
+    <h1 class="white">Static code analysis</h1>
+    <p class="white">19 November 2023, 08:51 PM</p>
+  </header>
+
+  <div
+    id='app'
+    class='columns'
+    :class='{
+      nomatches    : matches.length === 0,
+      showLow       : show.Low,
+      showMedium     : show.Medium,
+      showHigh : show.High,
+      showUnknown  : show.unknown,
+    }'
+    v-cloak>
+
+    <!-- "rendering" notice -->
+    <header id='rendering' class='blankslate'>
+      <h2>Rendering...</h2>
+      Large documents may take a moment to render.
+    </header>
+
+    <header id='no-matches' class='blankslate' v-cloak>
+      <h2>No Matches</h2>
+      The scanned files match no signatures.
+    </header>
+
+    <aside class='one-fourth column'>
+      <!-- match navigation -->
+      <nav class='menu'>
+        <span class='menu-heading'>Matches</span>
+        <a v-once v-for='search in filteredSearches'
+          :href='"#" + search.search'
+          class='menu-item'>
+          <code>{{ search.search }}</code>
+          <span class='counter'>{{ search.count }}</span>
+        </a>
+      </nav>
+      
+      <!-- filetype filter -->
+      <p >Filetype:</p>
+      <ul class='filter-list mb-5'>
+        <li v-for='pair in filetypes'>
+          <a 
+            @click='filterFiletype'
+            :data-filetype='pair[0]'
+            :class='{ selected: filetype === pair[0] }'
+            class='filter-item'>
+            <span class='count'>{{ pair[1] }}</span>
+            {{ pair[0] }}
+          </a>
+        </li>
+      </ul>
+
+      <p class='text-gray'>Severity:</p>
+      <ul class='filter-list mb-5'>
+        <li v-for='severity in severities'>
+          <a
+            @click='filterSeverity'
+            :data-severity='severity'
+            class='filter-item active'>
+            {{ severity }}
+          </a>
+        </li>
+      </ul>
+
+    
+
+    </aside>
+
+    <main class='three-fourths column'>
+
+      <!-- match groups -->
+      <section v-for='group in groups' data-show='true'>
+        <a :name='group[0]'></a>
+        <h2 class='border-bottom p-3'>Pattern Found for: '{{ group[0] }}'
+          <a class='show-hide' @click='hideSection'>Hide</a>
+        </h2>
+
+        <!-- matches -->
+        <matches
+          v-for='match in group[1]'
+          :key='match.id'
+          :match='match'
+          v-on:annotate='save'
+          v-on:severity='save'
+        ></matches>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- match template -->
+  <template id='match'>
+    <div class='match p-4' :data-severity='match.severity'>
+  
+      <p class='severity'>
+        Set as:
+        <a data-severity='unknown'>unknown</a>
+        <a data-severity='Low'       @click='severity("Low")'>Low</a>
+        <a data-severity='Medium'     @click='severity("Medium")'>Medium</a>
+        <a data-severity='High' @click='severity("High")'>High</a>
+      </p>
+      <h3 class="text-gray">File Path:{{ match.file }} at line: <span class='line-number'>{{ match.line }}</span></h3>
+      <code v-html='match.match'></code>
+      <textarea
+        placeholder='Notes'
+        v-model='match.note'
+        v-on:change='annotate()'>{{ match.note }}</textarea>
+    </div>
+  </template>
+
+  
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.min.js'></script>
+  
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+  
+  <script type='text/javascript'>
+    var filetype   = 'all';
+    var filetypes  = [
+ [
+  "all",
+  7
+ ],
+ [
+  "js",
+  7
+ ]
+];
+    var matches    = [
+ {
+  "id": 4,
+  "file": "/Users/mano/thesis/analysis/test/mock/Javascript/home.js",
+  "filetype": "js",
+  "search": "\\b(?:shell_exec|exec|passthru|system|proc_open|popen)\\s*\\(",
+  "match": "<span class=\"line-number\">26:</span>   secure<span class=\"token punctuation\">:</span> <span class=\"token boolean\">true</span><span class=\"token punctuation\">,</span>\n<span class=\"line-number\">27:</span>   httpOnly<span class=\"token punctuation\">:</span> <span class=\"token boolean\">true</span>\n<span class=\"line-number\">28:</span> }<span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">29:</span> \n<span class=\"line-number\">30:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Command execution patterns\n<span class=\"highlight\"><span class=\"line-number\">31:</span> var commandOutput <span class=\"token operator\">=</span> <span class=\"token function\">shell_exec</span><span class=\"token punctuation\">(</span><span class=\"token string\">'ls -la'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">; // Using shell_exec</span></span>\n<span class=\"line-number\">32:</span> \n<span class=\"line-number\">33:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Variable usage patterns\n<span class=\"line-number\">34:</span> var passwordVariable <span class=\"token operator\">=</span> <span class=\"token string\">\"$password\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">35:</span> \n<span class=\"line-number\">36:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Event handler pattern",
+  "line": 31,
+  "start": 26,
+  "end": 37,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 5,
+  "file": "/Users/mano/thesis/analysis/test/mock/Javascript/home.js",
+  "filetype": "js",
+  "search": "\\bheader\\s*\\(\\s*['\"]?Content-Disposition:\\s*attachment\\b",
+  "match": "<span class=\"line-number\">41:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Database query patterns\n<span class=\"line-number\">42:</span> var dbQuery <span class=\"token operator\">=</span> <span class=\"token string\">\"SELECT * FROM users\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">43:</span> pdo<span class=\"token punctuation\">.</span><span class=\"token function\">query</span><span class=\"token punctuation\">(</span>dbQuery<span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">44:</span> \n<span class=\"line-number\">45:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Header manipulation pattern\n<span class=\"highlight\"><span class=\"line-number\">46:</span> <span class=\"token function\">header</span><span class=\"token punctuation\">(</span>'Content<span class=\"token operator\">-</span>Disposition<span class=\"token punctuation\">:</span> attachment<span class=\"token comment\" spellcheck=\"true\">; filename=file.txt');</span></span>\n<span class=\"line-number\">47:</span> \n<span class=\"line-number\">48:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Usage of <span class=\"token variable\">$password</span> variable\n<span class=\"line-number\">49:</span> var userPassword <span class=\"token operator\">=</span> <span class=\"token variable\">$password</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">50:</span> \n<span class=\"line-number\">51:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Attribute assignment pattern",
+  "line": 46,
+  "start": 41,
+  "end": 52,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 3,
+  "file": "/Users/mano/thesis/analysis/test/mock/Javascript/home.js",
+  "filetype": "js",
+  "search": "\\bmove_uploaded_file\\s*\\(\\s*\\$_FILES\\[",
+  "match": "<span class=\"line-number\">16:</span> var password <span class=\"token operator\">=</span> <span class=\"token string\">\"userPassword\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">17:</span> var hashedPassword <span class=\"token operator\">=</span> <span class=\"token function\">password_hash</span><span class=\"token punctuation\">(</span>password<span class=\"token punctuation\">,</span> PASSWORD_BCRYPT<span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">18:</span> \n<span class=\"line-number\">19:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> File manipulation patterns\n<span class=\"line-number\">20:</span> var fileToMove <span class=\"token operator\">=</span> <span class=\"token variable\">$_FILES</span><span class=\"token punctuation\">[</span><span class=\"token string\">'file'</span><span class=\"token punctuation\">]</span><span class=\"token punctuation\">[</span><span class=\"token string\">'name'</span><span class=\"token punctuation\">]</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">21:</span> <span class=\"token function\">move_uploaded_file</span><span class=\"token punctuation\">(</span><span class=\"token variable\">$_FILES</span><span class=\"token punctuation\">[</span><span class=\"token string\">'file'</span><span class=\"token punctuation\">]</span><span class=\"token punctuation\">[</span><span class=\"token string\">'tmp_name'</span><span class=\"token punctuation\">]</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'/uploads/'</span> <span class=\"token operator\">+</span> fileToMove<span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">22:</span> \n<span class=\"line-number\">23:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Session manipulation pattern\n<span class=\"line-number\">24:</span> <span class=\"token function\">session_start</span><span class=\"token punctuation\">(</span>{\n<span class=\"line-number\">25:</span>   coLowie_lifetime<span class=\"token punctuation\">:</span> <span class=\"token number\">3600</span><span class=\"token punctuation\">,</span>\n<span class=\"line-number\">26:</span>   secure<span class=\"token punctuation\">:</span> <span class=\"token boolean\">true</span><span class=\"token punctuation\">,</span>",
+  "line": 21,
+  "start": 16,
+  "end": 27,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 6,
+  "file": "/Users/mano/thesis/analysis/test/mock/Javascript/home.js",
+  "filetype": "js",
+  "search": "\\s\\$password",
+  "match": "<span class=\"line-number\">43:</span> pdo<span class=\"token punctuation\">.</span><span class=\"token function\">query</span><span class=\"token punctuation\">(</span>dbQuery<span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">44:</span> \n<span class=\"line-number\">45:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Header manipulation pattern\n<span class=\"line-number\">46:</span> <span class=\"token function\">header</span><span class=\"token punctuation\">(</span>'Content<span class=\"token operator\">-</span>Disposition<span class=\"token punctuation\">:</span> attachment<span class=\"token comment\" spellcheck=\"true\">; filename=file.txt');</span>\n<span class=\"line-number\">47:</span> \n<span class=\"highlight\"><span class=\"line-number\">48:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Usage of <span class=\"token variable\">$password</span> variable</span>\n<span class=\"line-number\">49:</span> var userPassword <span class=\"token operator\">=</span> <span class=\"token variable\">$password</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">50:</span> \n<span class=\"line-number\">51:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Attribute assignment pattern\n<span class=\"line-number\">52:</span> var element <span class=\"token operator\">=</span> document<span class=\"token punctuation\">.</span><span class=\"token function\">getElementById</span><span class=\"token punctuation\">(</span><span class=\"token string\">'myElement'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">53:</span> element<span class=\"token punctuation\">.</span><span class=\"token function\">setAttribute</span><span class=\"token punctuation\">(</span><span class=\"token string\">'onclick'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'alert(\"Click event!\")'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 48,
+  "start": 43,
+  "end": 54,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 7,
+  "file": "/Users/mano/thesis/analysis/test/mock/Javascript/home.js",
+  "filetype": "js",
+  "search": "\\s\\$password",
+  "match": "<span class=\"line-number\">44:</span> \n<span class=\"line-number\">45:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Header manipulation pattern\n<span class=\"line-number\">46:</span> <span class=\"token function\">header</span><span class=\"token punctuation\">(</span>'Content<span class=\"token operator\">-</span>Disposition<span class=\"token punctuation\">:</span> attachment<span class=\"token comment\" spellcheck=\"true\">; filename=file.txt');</span>\n<span class=\"line-number\">47:</span> \n<span class=\"line-number\">48:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Usage of <span class=\"token variable\">$password</span> variable\n<span class=\"highlight\"><span class=\"line-number\">49:</span> var userPassword <span class=\"token operator\">=</span> <span class=\"token variable\">$password</span><span class=\"token comment\" spellcheck=\"true\">;</span></span>\n<span class=\"line-number\">50:</span> \n<span class=\"line-number\">51:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Attribute assignment pattern\n<span class=\"line-number\">52:</span> var element <span class=\"token operator\">=</span> document<span class=\"token punctuation\">.</span><span class=\"token function\">getElementById</span><span class=\"token punctuation\">(</span><span class=\"token string\">'myElement'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">53:</span> element<span class=\"token punctuation\">.</span><span class=\"token function\">setAttribute</span><span class=\"token punctuation\">(</span><span class=\"token string\">'onclick'</span><span class=\"token punctuation\">,</span> <span class=\"token string\">'alert(\"Click event!\")'</span><span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">54:</span> ",
+  "line": 49,
+  "start": 44,
+  "end": 55,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 1,
+  "file": "/Users/mano/thesis/analysis/test/mock/Javascript/home.js",
+  "filetype": "js",
+  "search": "\\sconsole",
+  "match": "<span class=\"line-number\">1:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Sample JavaScript code <span class=\"token keyword\">with</span> security patterns\n<span class=\"line-number\">2:</span> \n<span class=\"highlight\"><span class=\"line-number\">3:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Console usage</span>\n<span class=\"line-number\">4:</span> var x <span class=\"token operator\">=</span> <span class=\"token number\">10</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">5:</span> console<span class=\"token punctuation\">.</span><span class=\"token function\">log</span><span class=\"token punctuation\">(</span>x<span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">; // Using console.log</span>\n<span class=\"line-number\">6:</span> \n<span class=\"line-number\">7:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Eval function\n<span class=\"line-number\">8:</span> var userInput <span class=\"token operator\">=</span> <span class=\"token string\">\"alert('Hello, eval!')\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>",
+  "line": 3,
+  "start": 1,
+  "end": 9,
+  "severity": "unknown",
+  "note": ""
+ },
+ {
+  "id": 2,
+  "file": "/Users/mano/thesis/analysis/test/mock/Javascript/home.js",
+  "filetype": "js",
+  "search": "\\sconsole",
+  "match": "<span class=\"line-number\">1:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Sample JavaScript code <span class=\"token keyword\">with</span> security patterns\n<span class=\"line-number\">2:</span> \n<span class=\"line-number\">3:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Console usage\n<span class=\"line-number\">4:</span> var x <span class=\"token operator\">=</span> <span class=\"token number\">10</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"highlight\"><span class=\"line-number\">5:</span> console<span class=\"token punctuation\">.</span><span class=\"token function\">log</span><span class=\"token punctuation\">(</span>x<span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">; // Using console.log</span></span>\n<span class=\"line-number\">6:</span> \n<span class=\"line-number\">7:</span> <span class=\"token operator\">/</span><span class=\"token operator\">/</span> Eval function\n<span class=\"line-number\">8:</span> var userInput <span class=\"token operator\">=</span> <span class=\"token string\">\"alert('Hello, eval!')\"</span><span class=\"token comment\" spellcheck=\"true\">;</span>\n<span class=\"line-number\">9:</span> <span class=\"token function\">eval</span><span class=\"token punctuation\">(</span>userInput<span class=\"token punctuation\">)</span><span class=\"token comment\" spellcheck=\"true\">; // Using eval</span>\n<span class=\"line-number\">10:</span> ",
+  "line": 5,
+  "start": 1,
+  "end": 11,
+  "severity": "unknown",
+  "note": ""
+ }
+];
+    var searches   = [
+ {
+  "filetype": "js",
+  "search": "\\b(?:shell_exec|exec|passthru|system|proc_open|popen)\\s*\\(",
+  "count": 1
+ },
+ {
+  "filetype": "js",
+  "search": "\\bheader\\s*\\(\\s*",
+  "count": {
+   "'\"": {
+    "?Content-Disposition:\\s*attachment\\b": 1
+   }
+  }
+ },
+ {
+  "filetype": "js",
+  "search": "\\bmove_uploaded_file\\s*\\(\\s*\\$_FILES\\",
+  "count": 1
+ },
+ {
+  "filetype": "js",
+  "search": "\\s\\$password",
+  "count": 2
+ },
+ {
+  "filetype": "js",
+  "search": "\\sconsole",
+  "count": 2
+ }
+];
+    var storage    = 'oliseh-02723e28-2219-49e9-968f-bae90d5d7b4b';
+    var severities = ["Low","Medium","High","unknown"];
+    document.addEventListener('DOMContentLoaded', function(event) {
+
+
+  var saved = localStorage.getItem(storage);
+  if (saved) {
+    JSON.parse(saved).forEach(function (data, index) {
+      _.merge(matches[index], data);
+    });
+  }
+
+  
+  Vue.component('matches', {
+    props    : [ 'match' ],
+    template : '#match',
+
+    methods  : {
+
+      severity: function (value) {
+
+       
+        this.match.severity = (this.match.severity === value)
+          ? 'unknown'
+          : value ;
+        this.$emit('severity');
+      },
+
+      annotate: function () {
+        this.$emit('annotate');
+      }
+    },
+
+  });
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      filetype   : filetype,
+      filetypes  : filetypes,
+      matches    : matches,
+    
+      searches   : searches,
+      severities : severities,
+      show       : {
+        Low       : true,
+        Medium     : true,
+        High : true,
+        unknown  : true,
+      },
+    },
+
+    computed: {
+
+      groups: function () {
+
+        if (this.filetype === 'all') {
+          return _(matches)
+            .groupBy('search')
+            .toPairs()
+            .value();
+        }
+
+        return _(matches)
+          .filter({ filetype: this.filetype })
+          .groupBy('search')
+          .toPairs()
+          .value();
+      },
+
+      filteredSearches: function () {
+        return (this.filetype === 'all')
+          ? this.searches
+          : _(this.searches)
+            .filter({ filetype: this.filetype })
+            .value();
+      },
+
+    },
+
+    methods: {
+
+      filterFiletype: function (e) {
+        this.filetype = e.target.getAttribute('data-filetype');
+      },
+
+      filterSeverity: function (e) {
+        var severity = e.target.getAttribute('data-severity');
+        this.show[
+matchederror] = !this.show[severity];
+      },
+
+      hideSection: function (e) {
+        var section = e.target.parentElement.parentElement;
+        var show    = (section.getAttribute('data-show') === 'true')
+          ? 'false'
+          : 'true';
+        var text    = (e.target.text === 'Hide')
+          ? 'Show'
+          : 'Hide';
+
+        e.target.text = text;
+        section.setAttribute('data-show', show);
+      },
+
+      save: function () {
+
+        var data = this.matches.map(function (match) {
+          return {
+            note     : match.note,
+            severity : match.severity,
+          };
+        });
+
+        localStorage.setItem(storage, JSON.stringify(data));
+      }
+
+    },
+
+  });
+});
+
+  </script>
+
+</body>
+</html>
+

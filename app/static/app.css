@@ -42,24 +42,24 @@ aside li a[data-severity] {
   color: white;
 }
 /* sidebar severity filters */
-#app.showOk aside a[data-severity=ok] {
+#app.showLow aside a[data-severity=Low] {
   color: black
 }
-#app.showOk aside a[data-severity=ok]:hover {
+#app.showLow aside a[data-severity=Low]:hover {
   background-color: black;
   color: white;
 }
-#app.showWarn aside a[data-severity=warn] {
+#app.showMedium aside a[data-severity=Medium] {
   color: orange;
 }
-#app.showWarn aside a[data-severity=warn]:hover {
+#app.showMedium aside a[data-severity=Medium]:hover {
   background-color: orange;
   color: white;
 }
-#app.showCritical aside a[data-severity=critical] {
+#app.showHigh aside a[data-severity=High] {
   color: #bd2c00;
 }
-#app.showCritical aside a[data-severity=critical]:hover {
+#app.showHigh aside a[data-severity=High]:hover {
   background-color: #bd2c00;
   color: white;
 }
@@ -71,9 +71,9 @@ aside li a[data-severity] {
   color: white;
 }
 /* matches */
-#app.showOk div.match[data-severity=ok],
-#app.showWarn div.match[data-severity=warn],
-#app.showCritical div.match[data-severity=critical],
+#app.showLow div.match[data-severity=Low],
+#app.showMedium div.match[data-severity=Medium],
+#app.showHigh div.match[data-severity=High],
 #app.showUnknown div.match[data-severity=unknown] {
   display: block;
 
@@ -119,18 +119,18 @@ div.match {
 div.match:hover {
   border-left: 1px solid #e5e5e5;
 }
-div.match[data-severity=ok] {
+div.match[data-severity=Low] {
   background-color: #f2f8fa;
-  /* hide code samples and notes for "ok" severity matches */
+  /* hide code samples and notes for "Low" severity matches */
 }
-div.match[data-severity=ok] code,
-div.match[data-severity=ok] textarea {
+div.match[data-severity=Low] code,
+div.match[data-severity=Low] textarea {
   display: none;
 }
-div.match[data-severity=warn] {
+div.match[data-severity=Medium] {
   background-color: lightyellow;
 }
-div.match[data-severity=critical] {
+div.match[data-severity=High] {
   background-color: #ffccbd;
 }
 div.match span.match-id {
@@ -186,41 +186,41 @@ p.severity a[data-severity=unknown] {
   display: none;
   color: silver;
 }
-p.severity a[data-severity=ok] {
+p.severity a[data-severity=Low] {
   color: black
 }
-p.severity a[data-severity=ok]:hover {
+p.severity a[data-severity=Low]:hover {
   border: 1px solid black;
   background-color: black;
   color: white;
 }
-p.severity a[data-severity=warn] {
+p.severity a[data-severity=Medium] {
   color: orange;
 }
-p.severity a[data-severity=warn]:hover {
+p.severity a[data-severity=Medium]:hover {
   border: 1px solid orange;
   background-color: orange;
   color: white;
 }
-p.severity a[data-severity=critical] {
+p.severity a[data-severity=High] {
   color: #bd2c00;
 }
-p.severity a[data-severity=critical]:hover {
+p.severity a[data-severity=High]:hover {
   border: 1px solid #bd2c00;
   background-color: #bd2c00;
   color: white;
 }
-.match[data-severity=ok] p.severity a[data-severity=ok] {
+.match[data-severity=Low] p.severity a[data-severity=Low] {
   background-color: black;
   color: white;
   border: 1px solid black
 }
-.match[data-severity=warn] p.severity a[data-severity=warn] {
+.match[data-severity=Medium] p.severity a[data-severity=Medium] {
   background-color: orange;
   color: white;
   border: 1px solid orange;
 }
-.match[data-severity=critical] p.severity a[data-severity=critical] {
+.match[data-severity=High] p.severity a[data-severity=High] {
   background-color: #bd2c00;
   color: white;
   border: 1px solid #bd2c00;
@@ -286,16 +286,16 @@ p.severity a[data-severity=critical]:hover {
     color: black;
   }
   /* ... except for one serving as a label */
-  .match[data-severity='ok'] a[data-severity='ok'],
-  .match[data-severity='warn'] a[data-severity='warn'],
-  .match[data-severity='critical'] a[data-severity='critical'],
+  .match[data-severity='Low'] a[data-severity='Low'],
+  .match[data-severity='Medium'] a[data-severity='Medium'],
+  .match[data-severity='High'] a[data-severity='High'],
   .match[data-severity='unknown'] a[data-severity='unknown'] {
     -webkit-print-color-adjust: exact;
     display: inline-block;
   }
-  /* DO show "ok" matches on the PDF */
-  .match[data-severity='ok'] code,
-  .match[data-severity='ok'] textarea {
+  /* DO show "Low" matches on the PDF */
+  .match[data-severity='Low'] code,
+  .match[data-severity='Low'] textarea {
     display: block !important;
     /* kludge */
   }

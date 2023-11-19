@@ -1,11 +1,11 @@
 /**
  * Static Code Analysis Module
  * Orchestrates the static code analysis process.
- * Handles command-line arguments, configuration, and invokes necessary functions.
+ * Handles command-line arguments, configuration, and invLowes necessary functions.
  */
 
 process.on('uncaughtException', function (err) {
-  console.warn(err);
+  console.Medium(err);
   process.exit(1);
 });
 const decorators = require('./design');
@@ -24,7 +24,6 @@ var matches = [];
 
 
 glob(globify(options, signatures), config.glob, function (err, files) {
-  
 
   files.forEach(function (file) {
     matches = scan(file, matches, options, signatures);

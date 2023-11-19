@@ -27,9 +27,9 @@
     class='columns'
     :class='{
       nomatches    : matches.length === 0,
-      showOk       : show.ok,
-      showWarn     : show.warn,
-      showCritical : show.critical,
+      showLow       : show.Low,
+      showMedium     : show.Medium,
+      showHigh : show.High,
       showUnknown  : show.unknown,
     }'
     v-cloak>
@@ -117,9 +117,9 @@
       <p class='severity'>
         Set as:
         <a data-severity='unknown'>unknown</a>
-        <a data-severity='ok'       @click='severity("ok")'>Resolve</a>
-        <a data-severity='warn'     @click='severity("warn")'>Warn</a>
-        <a data-severity='critical' @click='severity("critical")'>Critical</a>
+        <a data-severity='Low'       @click='severity("Low")'>Low</a>
+        <a data-severity='Medium'     @click='severity("Medium")'>Medium</a>
+        <a data-severity='High' @click='severity("High")'>High</a>
       </p>
       <h3 class="text-gray">File Path:{{ match.file }} at line: <span class='line-number'>{{ match.line }}</span></h3>
       <code v-html='match.match'></code>

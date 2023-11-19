@@ -56,42 +56,30 @@ header#rendering {
 
 
 /* sidebar */
-aside li a[data-
-
-severity] {
+aside li a[data-severity] {
   color: silver;
 }
 
-/* sidebar 
-
-severity filters */
-#app.showOk aside a[data-
-
-severity=ok] {
+/* sidebar severity filters */
+#app.showLow aside a[data-severity=Low] {
   color: @blue;
   &:hover {
     .fn-highlight(@blue);
   }
 }
-#app.showWarn aside a[data-
-
-severity=warn] {
+#app.showMedium aside a[data-severity=Medium] {
   color: @orange;
   &:hover {
     .fn-highlight(@orange);
   }
 }
-#app.showCritical aside a[data-
-
-severity=critical] {
+#app.showHigh aside a[data-severity=High] {
   color: @red;
   &:hover {
     .fn-highlight(@red);
   }
 }
-#app.showUnknown aside a[data-
-
-severity=unknown] {
+#app.showUnknown aside a[data-severity=unknown] {
   color: @gray;
   &:hover {
     .fn-highlight(@gray);
@@ -100,18 +88,10 @@ severity=unknown] {
 
 
 /* matches */
-#app.showOk       div.match[data-
-
-severity=ok],
-#app.showWarn     div.match[data-
-
-severity=warn],
-#app.showCritical div.match[data-
-
-severity=critical],
-#app.showUnknown  div.match[data-
-
-severity=unknown] {
+#app.showLow       div.match[data-severity=Low],
+#app.showMedium     div.match[data-severity=Medium],
+#app.showHigh div.match[data-severity=High],
+#app.showUnknown  div.match[data-severity=unknown] {
   display: block;
 }
 
@@ -144,29 +124,19 @@ div.match {
     border-left: 1px solid #e5e5e5;
   }
 
-  /* apply background colors by 
-
-severity */
-  &[data-
-
-severity=low] {
+  /* apply background colors by severity */
+  &[data-severity=low] {
     background-color: @blueLight;
 
-    /* hide code samples and notes for "ok" 
-
-severity matches */
+    /* hide code samples and notes for "Low" severity matches */
     code, textarea {
       display: none;
     }
   }
-  &[data-
-
-severity=info] {
+  &[data-severity=info] {
     background-color: @orangeLight;
   }
-  &[data-
-
-severity=critical] {
+  &[data-severity=High] {
     background-color: @redLight;
   }
 
@@ -217,12 +187,8 @@ severity=critical] {
 }
 
 
-/* match 
-
-severity buttons */
-p.
-
-severity {
+/* match severity buttons */
+p.severity {
   text-align: right;
   width: 40%;
 
@@ -237,16 +203,12 @@ severity {
     text-decoration: none;
   }
 
-  a[data-
-
-severity=unknown] {
+  a[data-severity=unknown] {
     display: none;
     color: silver;
   }
 
-  a[data-
-
-severity=ok] {
+  a[data-severity=Low] {
     color: @blue;
     &:hover {
       border: 1px solid @blue;
@@ -254,9 +216,7 @@ severity=ok] {
     }
   }
 
-  a[data-
-
-severity=warn] {
+  a[data-severity=Medium] {
     color: @orange;
     &:hover {
       border: 1px solid @orange;
@@ -264,9 +224,7 @@ severity=warn] {
     }
   }
 
-  a[data-
-
-severity=critical] {
+  a[data-severity=High] {
     color: @red;
     &:hover {
       border: 1px solid @red;
@@ -274,33 +232,15 @@ severity=critical] {
     }
   }
 }
-.match[data-
-
-severity=ok] p.
-
-severity a[data-
-
-severity=ok] {
+.match[data-severity=Low] p.severity a[data-severity=Low] {
   .fn-highlight(@blue);
   border: 1px solid @blue;
 }
-.match[data-
-
-severity=warn] p.
-
-severity a[data-
-
-severity=warn] {
+.match[data-severity=Medium] p.severity a[data-severity=Medium] {
   .fn-highlight(@orange);
   border: 1px solid @orange;
 }
-.match[data-
-
-severity=critical] p.
-
-severity a[data-
-
-severity=critical] {
+.match[data-severity=High] p.severity a[data-severity=High] {
   .fn-highlight(@red);
   border: 1px solid @red;
 }
@@ -354,45 +294,23 @@ severity=critical] {
     }
   }
 
-  /* hide the "
-
-severity" buttons */
-  .match p.
-
-severity a {
+  /* hide the "severity" buttons */
+  .match p.severity a {
     display: none;
     border: none;
   }
 
   /* ... except for one serving as a label */
-  .match[data-
-
-severity='ok']       a[data-
-
-severity='ok'],
-  .match[data-
-
-severity='warn']     a[data-
-
-severity='warn'],
-  .match[data-
-
-severity='critical'] a[data-
-
-severity='critical'],
-  .match[data-
-
-severity='unknown']  a[data-
-
-severity='unknown'] {
+  .match[data-severity='Low']       a[data-severity='Low'],
+  .match[data-severity='Medium']     a[data-severity='Medium'],
+  .match[data-severity='High'] a[data-severity='High'],
+  .match[data-severity='unknown']  a[data-severity='unknown'] {
 		-webkit-print-color-adjust: exact; 
     display: inline-block;
   }
 
-  /* DO show "ok" matches on the PDF */
-  .match[data-
-
-severity='ok'] {
+  /* DO show "Low" matches on the PDF */
+  .match[data-severity='Low'] {
     code, textarea {
       display: block !important; /* kludge */
     }

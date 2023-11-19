@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
       searches   : searches,
       severities : severities,
       show       : {
-        ok       : true,
-        warn     : true,
-        critical : true,
+        Low       : true,
+        Medium     : true,
+        High : true,
         unknown  : true,
       },
     },

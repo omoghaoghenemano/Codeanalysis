@@ -1,43 +1,25 @@
 const fs     = require('fs');
 const lodash = require('lodash');
 const path   = require('path');
-
 module.exports = function(file, matches, options, signatures, errornames) {
-
-
   const filetype = path.extname(file).toLowerCase().substr(1);
-  
   const haystack = fs.readFileSync(file, 'utf8').split(/\r?\n/);
-
-
   const sigs     = lodash.filter(signatures, function (signature) {
     return lodash.includes(signature.filetypes, filetype);
   });
-
-
 let patternname ;
-
-  sigs.forEach(function (sig) {
-
-   
+ sigs.forEach(function (sig) {
     const regex = new RegExp(sig.signature, 'gi');
      patternname = sig.patternname;
-    
-
-    
     var matched = [];
     haystack.forEach(function (line, index) {
       if (line.match(regex)) {
         matched.push(index);
-        
-
       }
     });
-
     // iterate over the matching line numbers
     matched.forEach(function (lineNumber) {
-
-      // slice the matching line plus surrounding context out of haystack
+ // slice the matching line plus surrounding context out of haystack
       var start = lineNumber - parseInt(options['--lines-before']);
       if (start < 0) {
         start = 0;
@@ -46,10 +28,6 @@ let patternname ;
       if (end > haystack.length) {
         end = haystack.length;
       }
-
-     
-
-
       // push the match object
       matches.push({
         id       : matches.length + 1,

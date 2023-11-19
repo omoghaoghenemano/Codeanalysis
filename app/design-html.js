@@ -115,7 +115,7 @@ severity = 'unknown';
     filetypes  : JSON.stringify(selectfiletype, null, ' '),
     matches    : JSON.stringify(sort(matches), null, ' '),
     searches   : JSON.stringify(searches, null, ' '),
-    severities : JSON.stringify([ 'ok', 'warn', 'critical', 'unknown' ]),
+    severities : JSON.stringify([ 'Low', 'Medium', 'High', 'unknown' ]),
   };
 
 

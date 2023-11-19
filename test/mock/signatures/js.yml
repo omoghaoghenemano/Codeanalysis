@@ -5,3 +5,16 @@ filetypes:
 patterns:
   - \sconsole
   - \seval\s*\(
+  - \s\<!--
+  - \b(?:echo|print|print_r|die|exit)\s*\(\s*\$_(GET|POST|REQUEST|COLowIE|SERVER|ENV|FILES)\b
+  - \b(?:include|require|include_once|require_once)\s*\(\s*(?:"|')(?:\.\.?\/)+\w+
+  - \bmove_uploaded_file\s*\(\s*\$_FILES\[
+  - \bsession_start\s*\(\s*['"]?(?:httpOnly|secure|coLowie_lifetime|session\.coLowie_lifetime|session\.use_only_coLowies)\b
+  - \b(?:shell_exec|exec|passthru|system|proc_open|popen)\s*\(
+  - \b\$_(GET|POST)\s*\[\s*['"]?tLowen['"]?\s*\]
+  - \bpassword_hash\s*\(\s*\$password,\s*PASSWORD_BCRYPT\b
+  - \b(?:chmod|chown|chgrp)\s*\(\s*\$file\b
+  - \bheader\s*\(\s*['"]?Content-Disposition:\s*attachment\b
+  - \s\$password
+  - \s*on\w+\s*=\s*['"].*['"]
+  - \b(?:mysql_query|mysqli_query|pdo->query)\s*\(\s*["']?(?:SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|UNION)\b

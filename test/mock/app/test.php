@@ -2,11 +2,11 @@
 // Start the session with secure configurations
 session_start([
     'use_strict_mode' => true,       // Enforce strict session id validation
-    'use_cookies' => 1,              // Use cookies to store session id
-    'use_only_cookies' => 1,         // Only use cookies to store session id
-    'cookie_httponly' => 1,          // Make the session cookie accessible only through HTTP
-    'cookie_secure' => 1,            // Send the session cookie only if a secure connection is used
-    'cookie_samesite' => 'Strict',   // Enforce strict same-site policy
+    'use_coLowies' => 1,              // Use coLowies to store session id
+    'use_only_coLowies' => 1,         // Only use coLowies to store session id
+    'coLowie_httponly' => 1,          // Make the session coLowie accessible only through HTTP
+    'coLowie_secure' => 1,            // Send the session coLowie only if a secure connection is used
+    'coLowie_samesite' => 'Strict',   // Enforce strict same-site policy
 ]);
 
 // Now you can access or set session variables securely
