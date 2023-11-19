@@ -43,7 +43,7 @@ module.exports = function (options, config) {
 
     const filetypes = yml.filetypes;
 
-    const errornames = yml.errornames
+   
 
     yml.patterns.forEach(function (pattern) {
       signatures.push({
@@ -51,7 +51,7 @@ module.exports = function (options, config) {
         filetypes : filetypes.map(function (t) {
           return t.toLowerCase();
         }),
-        patternname: errornames
+       
       });
     });
   });
