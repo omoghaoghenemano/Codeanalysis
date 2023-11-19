@@ -2,24 +2,6 @@
 filetypes:
   - php
 
-errornames:
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-  - error
-
 patterns:
   - \s\$_GET
   - \s\$_POST
